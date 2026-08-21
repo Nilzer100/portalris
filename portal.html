@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Institucional OITE - RIS San Marcos</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* TEMA BLANCO Y AZUL INSTITUCIONAL PREMIUM */
+            --bg-page: #F4F7F9;         
+            --surface: #FFFFFF;         
+            
+            --brand-dark: #0B1120;      
+            --brand-blue: #0044CC;      
+            --brand-light: #E0E7FF;     
+            --brand-navy: #001F4D;      
+            
+            --accent-gold: #D4AF37;     
+            --accent-cyan: #0284C7;
+            
+            --text-main: #334155;       
+            --text-muted: #64748B;      
+            
+            --border-color: #E2E8F0;    
+            
+            --success: #10B981;
+            --success-bg: #ECFDF5;
+            --danger: #DC2626;
+            --warning-bg: #FFFBEB;
+            --warning-text: #B45309;
+            
+            --shadow-sm: 0 4px 6px -1px rgba(0, 34, 102, 0.05);
+            --shadow-md: 0 10px 20px -3px rgba(0, 34, 102, 0.1);
+            --shadow-hover: 0 20px 40px -5px rgba(0, 34, 102, 0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 50%, rgba(0, 68, 204, 0.02) 0%, transparent 40%),
+                radial-gradient(circle at 90% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        h1, h2, h3, h4, h5 { font-family: 'Montserrat', sans-serif; color: var(--brand-navy); }
+        .serif { font-family: 'Playfair Display', serif; }
+        .mono { font-family: monospace; }
+
+        /* =========================================
+           CLASES DE ADMINISTRADOR
+           ========================================= */
+        body:not(.admin-mode) .admin-only { display: none !important; }
+        body.admin-mode .admin-only-hide { display: none !important; }
+
+        /* =========================================
+           NAVBAR SUPERIOR
+           ========================================= */
+        .navbar-wrapper {
+            position: fixed; top: 15px; left: 0; right: 0; z-index: 1000;
+            display: flex; justify-content: center; padding: 0 15px;
+            transition: all 0.3s ease;
+        }
+
+        .top-navbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 50px; padding: 10px 25px;
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; max-width: 1300px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-brand {
+            font-weight: 800; color: var(--brand-navy); font-size: 1.15rem;
+            display: flex; align-items: center; gap: 10px; text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .nav-brand i { color: var(--brand-blue); font-size: 1.3rem; }
+
+        .nav-info { display: flex; gap: 15px; font-size: 0.85rem; color: var(--text-muted); font-weight: 600; align-items: center; }
+        .nav-info div { display: flex; align-items: center; gap: 8px; padding: 6px 16px; background: var(--bg-page); border-radius: 50px; border: 1px solid var(--border-color); }
+        .nav-info i { color: var(--brand-blue); }
+
+        .btn-login-nav {
+            background: var(--brand-navy); color: white; border: none; padding: 8px 20px; border-radius: 50px;
+            font-family: 'Montserrat', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 8px; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0, 34, 102, 0.2);
+        }
+        .btn-login-nav:hover { background: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 68, 204, 0.3); }
+
+        .btn-logout-nav {
+            background: #FEF2F2; color: var(--danger); border: 1px solid #FECACA; padding: 8px 20px; border-radius: 50px;
+            font-family: 'Montserrat', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s;
+            display: flex; align-items: center; gap: 8px; font-size: 0.85rem;
+        }
+        .btn-logout-nav:hover { background: var(--danger); color: white; }
+
+        .admin-banner {
+            background: var(--danger); color: white; text-align: center; padding: 8px;
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 999; display: none; text-transform: uppercase;
+        }
+
+        /* =========================================
+           HERO SECTION ELEGANTE
+           ========================================= */
+        .hero {
+            min-height: 520px; padding: 120px 20px 60px; position: relative;
+            background-image: url('638176952_1492050079148025_3312540957278659050_n.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 31, 77, 0.95) 0%, rgba(0, 68, 204, 0.7) 100%);
+        }
+
+        .hero-glass-card {
+            position: relative; z-index: 2;
+            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 40px 50px; border-radius: 24px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            width: 100%; max-width: 900px; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 40px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero-logo-wrapper { position: relative; flex-shrink: 0; }
+        .hero-logo-wrapper::before {
+            content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%; background: linear-gradient(135deg, #FFF, var(--accent-gold)); z-index: -1;
+            animation: spin 6s linear infinite; opacity: 0.8; filter: blur(8px);
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .hero-logo {
+            width: 130px; height: 130px; background: var(--surface); border-radius: 50%;
+            padding: 6px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); border: 3px solid white;
+            cursor: pointer; transition: all 0.4s ease; position: relative; z-index: 2;
+        }
+        .hero-logo:hover { transform: scale(1.05); border-color: var(--accent-gold); }
+
+        .hero-text-content {
+            display: flex; flex-direction: column; text-align: left;
+            border-left: 2px solid rgba(255,255,255,0.3); padding-left: 30px;
+        }
+
+        .hero-title { 
+            color: #ffffff; font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 800; margin-bottom: 5px; 
+            text-shadow: 0 4px 15px rgba(0,0,0,0.4); line-height: 1.1; letter-spacing: -0.5px;
+        }
+        
+        .hero-subtitle { 
+            font-size: clamp(0.9rem, 2vw, 1.1rem); font-weight: 600; color: var(--accent-gold); 
+            letter-spacing: 3px; text-transform: uppercase; margin-top: 10px; text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* =========================================
+           BUSCADOR 
+           ========================================= */
+        .main-container { max-width: 1400px; margin: -50px auto 50px; padding: 0 15px; position: relative; z-index: 10; }
+
+        .dashboard-bar {
+            background: var(--surface); border-radius: 100px; padding: 12px 25px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+            margin-bottom: 50px; border: 1px solid var(--border-color); box-shadow: var(--shadow-md);
+            max-width: 900px; margin-left: auto; margin-right: auto;
+        }
+
+        .search-box { position: relative; flex: 1; min-width: 280px; }
+        .search-box i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--brand-blue); font-size: 1.2rem; }
+        .search-box input {
+            width: 100%; padding: 14px 20px 14px 50px; border: 2px solid transparent;
+            border-radius: 50px; font-size: 0.95rem; font-family: 'Inter', sans-serif; 
+            background: var(--bg-page); color: var(--brand-dark); transition: all 0.3s; font-weight: 500;
+        }
+        .search-box input:focus { outline: none; background: var(--surface); border-color: var(--brand-blue); box-shadow: 0 0 0 4px rgba(0, 68, 204, 0.1); }
+
+        .admin-toolbar { display: flex; justify-content: center; width: 100%; margin-top: -20px; margin-bottom: 30px;}
+        .btn-add { background: var(--success); color: white; border: none; padding: 12px 28px; border-radius: 50px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.3s; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); font-family: 'Montserrat', sans-serif;}
+        .btn-add:hover { transform: translateY(-2px); background: #059669; }
+
+        /* =========================================
+           TARJETAS DE SISTEMAS (DISEÑO PREMIUM)
+           ========================================= */
+        .systems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); gap: 35px; margin-bottom: 60px; }
+        @media (min-width: 900px) { .systems-grid { grid-template-columns: repeat(auto-fill, minmax(48%, 1fr)); } }
+
+        .sys-card {
+            background: var(--surface); border-radius: 20px; border: 1px solid var(--border-color);
+            overflow: hidden; display: flex; flex-direction: column; position: relative;
+            box-shadow: var(--shadow-sm); transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .sys-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: #cbd5e1; }
+
+        .card-img-wrapper {
+            height: 180px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border-color);
+        }
+        .card-img-bg {
+            width: 100%; height: 100%; background-size: cover; background-position: center;
+            transition: transform 0.8s ease;
+        }
+        .sys-card:hover .card-img-bg { transform: scale(1.08); }
+        
+        .card-img-overlay {
+            position: absolute; inset: 0; 
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.1) 0%, rgba(15, 23, 42, 0.85) 100%);
+            pointer-events: none;
+        }
+
+        /* ETIQUETA NUMÉRICA ELEGANTE */
+        .sys-number {
+            position: absolute; top: 16px; left: 16px; z-index: 5;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            color: var(--accent-gold); font-family: 'Playfair Display', serif;
+            font-size: 1.2rem; font-weight: 800; width: 42px; height: 42px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* ETIQUETA DE ESTADO (Privado/Público) */
+        .sys-badge {
+            position: absolute; top: 16px; right: 16px; z-index: 5;
+            padding: 6px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 800; 
+            text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .sys-badge.Privado { background: #DC2626; color: white; border: 1px solid #B91C1C; }
+        .sys-badge.Público { background: #10B981; color: white; border: 1px solid #059669; }
+        .sys-badge.Interno { background: #F59E0B; color: white; border: 1px solid #D97706; }
+
+        /* TÍTULO SOBRE LA IMAGEN */
+        .card-header-content {
+            position: absolute; bottom: 0; left: 0; right: 0; padding: 20px;
+            display: flex; align-items: flex-end; z-index: 5;
+        }
+        .sys-title { 
+            font-size: 1.4rem; display: flex; align-items: center; gap: 12px; 
+            color: white; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .sys-title i { 
+            color: var(--accent-gold); font-size: 1.2rem; 
+        }
+
+        /* BOTONES ADMIN SOBRE LA IMAGEN */
+        .card-admin-overlay { position: absolute; top: 16px; left: 70px; z-index: 20; display: none; gap: 8px; }
+        .btn-edit, .btn-delete { 
+            width: 42px; height: 42px; border-radius: 12px; border: none; color: white; cursor: pointer; 
+            display: flex; align-items: center; justify-content: center; font-size: 1rem; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: all 0.2s; 
+            background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .btn-edit:hover { background: var(--accent-gold); color: #FFF; transform: scale(1.1); border-color: var(--accent-gold);} 
+        .btn-delete:hover { background: var(--danger); color: #FFF; transform: scale(1.1); border-color: var(--danger);}
+
+        /* CUERPO DE LA TARJETA */
+        .card-body { padding: 25px; display: flex; flex-direction: column; gap: 20px; flex: 1; }
+        
+        .card-content-split { display: flex; flex-direction: column; gap: 25px; flex: 1; }
+        @media (min-width: 600px) { 
+            .card-content-split { flex-direction: row; } 
+            .card-actions { width: 48%; border-right: 1px solid var(--border-color); padding-right: 25px; }
+            .card-modules { width: 52%; padding-left: 5px; }
+        }
+        
+        .card-actions { display: flex; flex-direction: column; gap: 15px; }
+
+        .btn-access { 
+            background: var(--brand-navy); color: white; padding: 14px; 
+            border-radius: 10px; text-decoration: none; font-size: 0.95rem; font-weight: 700; text-align: center; 
+            transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; 
+            box-shadow: 0 4px 15px rgba(0, 31, 77, 0.25); font-family: 'Montserrat', sans-serif;
+        }
+        .btn-access:hover { background: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 68, 204, 0.35); }
+
+        /* CAJAS DE ACCESO (CREDENCIALES, AVISOS, LIBRE) */
+        .access-box { border-radius: 10px; padding: 15px; display: flex; flex-direction: column; gap: 10px;}
+        
+        .cred-box { background: var(--bg-page); border: 1px solid var(--border-color); }
+        .cred-header { font-size: 0.75rem; font-weight: 800; color: var(--brand-navy); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; margin-bottom: 5px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;}
+        .cred-row { display: flex; justify-content: space-between; align-items: center;}
+        .cred-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;}
+        .cred-val-wrap { display: flex; align-items: center; gap: 5px; }
+        .cred-val { font-size: 0.85rem; color: var(--brand-navy); font-weight: 700; background: var(--surface); padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border-color); }
+        .cred-row.clave .cred-val { color: var(--danger); }
+        .btn-copy { background: var(--surface); border: 1px solid var(--border-color); color: var(--brand-blue); cursor: pointer; padding: 5px 8px; border-radius: 6px; transition: all 0.2s; font-size: 0.85rem;}
+        .btn-copy:hover { background: var(--brand-blue); color: white; border-color: var(--brand-blue); }
+
+        .alert-box { display: flex; background: var(--warning-bg); border: 1px solid #FCD34D; flex-direction: row; align-items: flex-start; gap: 12px; border-radius: 10px; padding: 15px;}
+        .alert-box .icon { color: var(--warning-text); font-size: 1.4rem; margin-top: 2px;}
+        .alert-box .text { display: flex; flex-direction: column; gap: 3px; }
+        .alert-box .title { font-size: 0.8rem; font-weight: 800; color: var(--warning-text); text-transform: uppercase; letter-spacing: 0.5px;}
+        .alert-box .desc { font-size: 0.85rem; font-weight: 600; color: #92400E; line-height: 1.3;}
+
+        .free-box { display: flex; background: var(--success-bg); border: 1px solid #A7F3D0; flex-direction: row; align-items: flex-start; gap: 12px; border-radius: 10px; padding: 15px;}
+        .free-box .icon { color: var(--success); font-size: 1.4rem; margin-top: 2px;}
+        .free-box .text { display: flex; flex-direction: column; gap: 3px; }
+        .free-box .title { font-size: 0.8rem; font-weight: 800; color: var(--success); text-transform: uppercase; letter-spacing: 0.5px;}
+        .free-box .desc { font-size: 0.85rem; font-weight: 600; color: #065F46; line-height: 1.3;}
+
+        .card-modules { display: flex; flex-direction: column; }
+        .module-title { font-size: 0.8rem; font-weight: 800; color: var(--brand-navy); text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px;}
+        .module-title i { color: var(--brand-blue); font-size: 1rem;}
+        
+        .chip-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chip { 
+            background: var(--surface); border: 1px solid var(--border-color); padding: 8px 14px; 
+            border-radius: 50px; font-size: 0.8rem; font-weight: 600; color: var(--text-main);
+            display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .chip i { color: var(--brand-blue); font-size: 0.75rem; transition: transform 0.2s; }
+        .chip:hover { border-color: var(--brand-blue); background: var(--brand-light); transform: translateY(-2px); color: var(--brand-navy); box-shadow: 0 4px 8px rgba(0,68,204,0.1);}
+        .chip:hover i { transform: scale(1.2); }
+
+        /* =========================================
+           DIRECTORIO Y HERRAMIENTAS
+           ========================================= */
+        .two-cols-layout { display: grid; grid-template-columns: 1fr; gap: 40px; margin-bottom: 60px; }
+        @media (min-width: 900px) { .two-cols-layout { grid-template-columns: 1fr 1fr; } }
+
+        .section-header { font-size: 1.5rem; color: var(--brand-navy); margin-bottom: 25px; display: flex; align-items: center; gap: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;}
+        .section-header i { background: var(--brand-blue); color: white; padding: 10px; border-radius: 10px; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0, 68, 204, 0.2);}
+
+        .tools-grid { display: flex; flex-direction: column; gap: 15px; }
+
+        .tool-card { 
+            background: var(--surface); border-radius: 16px; padding: 20px 25px; display: flex; align-items: center; gap: 20px; 
+            text-decoration: none; color: var(--text-main); transition: all 0.3s ease; position: relative; overflow: hidden; 
+            border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
+        }
+        .tool-card:hover { transform: translateX(5px); border-color: var(--brand-blue); box-shadow: var(--shadow-md); }
+        
+        .tool-icon { font-size: 1.8rem; color: var(--brand-blue); background: var(--brand-light); width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border-radius: 12px; flex-shrink: 0;}
+        .tool-card.audit-card .tool-icon { color: var(--success); background: var(--success-bg); }
+        
+        .tool-info { flex: 1; position: relative; z-index: 2;}
+        .tool-info h4 { font-size: 1.1rem; color: var(--brand-navy); margin-bottom: 3px; font-weight: 800; }
+        .tool-info p { font-size: 0.85rem; color: var(--text-muted); margin: 0; line-height: 1.4; font-weight: 500;}
+        
+        .tool-arrow { font-size: 1.2rem; color: var(--border-color); transition: all 0.3s ease; }
+        .tool-card:hover .tool-arrow { color: var(--brand-blue); transform: translateX(3px); }
+
+        /* DIRECTORIO DE ANEXOS */
+        .directory-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .dir-card {
+            background: var(--surface); border: 1px solid var(--border-color); border-radius: 16px;
+            padding: 25px 15px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;
+            box-shadow: var(--shadow-sm); transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        .dir-card::before { content: ''; position: absolute; left: 0; top: 0; right: 0; height: 4px; background: var(--border-color); transition: all 0.3s;}
+        .dir-card:hover { border-color: var(--brand-blue); transform: translateY(-4px); box-shadow: var(--shadow-md);}
+        .dir-card:hover::before { background: var(--brand-blue); }
+        .dir-icon { width: 50px; height: 50px; background: var(--bg-page); color: var(--brand-blue); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; transition: all 0.3s;}
+        .dir-card:hover .dir-icon { background: var(--brand-blue); color: white; transform: scale(1.1) rotate(-5deg); box-shadow: 0 4px 10px rgba(0,68,204,0.3);}
+        .dir-info h4 { font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; color: var(--text-main); text-transform: uppercase;}
+        .dir-info p { font-size: 1.15rem; color: var(--brand-blue); font-weight: 800; margin: 0; font-family: monospace; }
+        
+        .dir-admin-overlay { position: absolute; top: 10px; left: 10px; display: none; gap: 5px; z-index: 10;}
+        .dir-admin-overlay button { width: 28px; height: 28px; border-radius: 6px; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: all 0.2s;}
+        body.admin-mode .dir-admin-overlay { display: flex; }
+
+        /* =========================================
+           AVATAR CSS 3D (ULTRA DETALLADO)
+           ========================================= */
+        .oite-avatar-container {
+            position: fixed; bottom: 0px; right: 30px; z-index: 1000;
+            display: flex; align-items: flex-end; gap: 15px; pointer-events: none; 
+            flex-direction: row-reverse;
+        }
+
+        .avatar-speech-bubble {
+            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
+            color: var(--brand-navy); border-bottom: 4px solid var(--brand-blue);
+            padding: 18px 24px; border-radius: 20px 20px 0 20px; 
+            max-width: 260px; font-size: 0.9rem; font-weight: 600;
+            box-shadow: 0 20px 40px rgba(0, 34, 102, 0.2); border: 1px solid var(--border-color);
+            opacity: 0; transform: translateY(10px) translateX(20px) scale(0.9);
+            transform-origin: bottom right; line-height: 1.5;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: auto; position: relative; margin-bottom: 120px; 
+        }
+        .avatar-speech-bubble.active { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+        .avatar-speech-bubble i { color: var(--brand-blue); margin-right: 8px; font-size: 1.2rem;}
+
+        .avatar-css-3d {
+            position: relative; width: 140px; height: 180px; z-index: 10;
+            cursor: pointer; pointer-events: auto;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: gentleFloat 6s ease-in-out infinite;
+        }
+        .avatar-css-3d:hover { transform: translateY(-10px) scale(1.05); }
+        .avatar-css-3d:active { transform: translateY(0) scale(0.95); }
+
+        @keyframes gentleFloat {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Skin & Hair Colors */
+        :root {
+            --skin-base: #fbcba9;
+            --skin-dark: #e6a884;
+            --hair-base: #7c4e29;
+            --hair-dark: #4a2d18;
+            --shirt-color: #d0e6f5;
+            --vest-color: #213555;
+            --vest-dark: #0f172a;
+        }
+
+        /* Head & Face */
+        .a-head {
+            position: absolute; top: 15px; left: 45px; width: 50px; height: 60px;
+            background: radial-gradient(circle at 35% 35%, var(--skin-base) 0%, var(--skin-dark) 100%);
+            border-radius: 40% 40% 50% 50%; z-index: 4; 
+            box-shadow: -3px 5px 10px rgba(0,0,0,0.15);
+        }
+        .a-ear {
+            position: absolute; top: 25px; width: 14px; height: 18px;
+            background: radial-gradient(circle at 35% 35%, var(--skin-base) 0%, var(--skin-dark) 100%);
+            border-radius: 50%; z-index: 3; box-shadow: inset -2px -2px 4px rgba(0,0,0,0.1);
+        }
+        .a-ear.left { left: 38px; }
+        .a-ear.right { right: 33px; }
+
+        .a-hair {
+            position: absolute; top: -6px; left: -4px; right: -4px; height: 28px;
+            background: linear-gradient(135deg, var(--hair-base), var(--hair-dark));
+            border-radius: 35px 35px 10px 10px; z-index: 5;
+        }
+        .a-hair-tuft {
+            position: absolute; top: -12px; left: 8px; width: 28px; height: 24px;
+            background: linear-gradient(135deg, #8a5a33, var(--hair-dark));
+            border-radius: 50%; box-shadow: -4px 4px 0 rgba(0,0,0,0.1);
+        }
+
+        .a-brow { position: absolute; top: 22px; width: 14px; height: 5px; background: var(--hair-dark); border-radius: 4px; z-index: 6;}
+        .a-brow.left { left: 8px; transform: rotate(-5deg); }
+        .a-brow.right { right: 8px; transform: rotate(5deg); }
+        
+        .a-eye { position: absolute; top: 30px; width: 7px; height: 9px; background: #222; border-radius: 50%; z-index: 6;}
+        .a-eye.left { left: 12px; }
+        .a-eye.right { right: 12px; }
+        .a-eye::after { content:''; position: absolute; top: 1px; left: 1px; width: 3px; height: 3px; background:#fff; border-radius:50%; }
+
+        .a-beard {
+            position: absolute; bottom: -2px; left: 4px; right: 4px; height: 24px;
+            background: var(--hair-dark); border-radius: 10px 10px 25px 25px;
+            clip-path: polygon(0 40%, 20% 0, 80% 0, 100% 40%, 100% 100%, 0 100%); z-index: 5;
+        }
+        .a-mouth {
+            position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
+            width: 22px; height: 12px; background: #fff; border-radius: 0 0 22px 22px;
+            border: 2px solid #2a170c; border-top: 1px solid #2a170c; overflow: hidden; z-index: 6;
+        }
+        .a-tongue { position: absolute; bottom: 0; left: 3px; width: 14px; height: 6px; background: #ef4444; border-radius: 50% 50% 0 0; }
+
+        /* Body & Clothes */
+        .a-neck { position: absolute; top: 70px; left: 60px; width: 20px; height: 15px; background: var(--skin-dark); z-index: 2; }
+        
+        .a-shirt-collar {
+            position: absolute; top: 78px; left: 50px; width: 40px; height: 20px; background: var(--shirt-color); z-index: 3;
+            clip-path: polygon(0 0, 50% 100%, 100% 0, 80% 100%, 20% 100%);
+        }
+        
+        .a-vest {
+            position: absolute; top: 85px; left: 30px; width: 80px; height: 95px; 
+            background: linear-gradient(135deg, var(--vest-color), var(--vest-dark)); z-index: 4;
+            border-radius: 25px 25px 10px 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            overflow: hidden; border: 1px solid #334155;
+        }
+        .a-vest-zipper { position: absolute; top:0; left: 39px; width: 2px; height: 100%; background: #0f172a; opacity: 0.6;}
+        
+        .a-lanyard { position: absolute; top: 0; left: 45px; width: 2px; height: 40px; background: #001f4d; transform: rotate(15deg); }
+        .a-lanyard-2 { position: absolute; top: 0; left: 33px; width: 2px; height: 40px; background: #001f4d; transform: rotate(-15deg); }
+        
+        .a-badge { 
+            position: absolute; top: 38px; left: 33px; width: 14px; height: 20px; background: #fff; 
+            border-radius: 2px; border: 1px solid #94a3b8; box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .a-badge::before { content:''; position: absolute; top:2px; left:4px; width: 4px; height:4px; background:#ef4444; border-radius:50%; }
+
+        .a-stripe { position: absolute; bottom: 25px; left: 10px; right: 10px; height: 4px; background: #fff; border-radius: 2px;}
+        .a-stripe-red { position: absolute; bottom: 25px; left: 10px; width: 15px; height: 4px; background: #ef4444; border-radius: 2px 0 0 2px; z-index:2;}
+        .a-vest-logo { position: absolute; bottom: 12px; left: 10px; right: 10px; text-align: center; color: #fff; font-size: 5px; font-weight: 800; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;}
+
+        /* Arms & Hands */
+        .a-arm-l { 
+            position: absolute; top: 90px; left: 15px; width: 25px; height: 75px; 
+            background: linear-gradient(to bottom, #e0f2fe, var(--shirt-color)); z-index: 3; 
+            border-radius: 12px; transform: rotate(15deg); box-shadow: inset 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .a-hand-l { position: absolute; bottom: -12px; left: 2px; width: 20px; height: 24px; background: var(--skin-dark); border-radius: 50%; }
+        
+        /* The Right Arm Presenting */
+        .a-arm-r { 
+            position: absolute; top: 95px; right: -25px; width: 60px; height: 24px; 
+            background: linear-gradient(to right, var(--shirt-color), #e0f2fe); z-index: 5; 
+            border-radius: 12px; transform: rotate(-15deg); transform-origin: left center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .a-hand-r { 
+            position: absolute; right: -12px; top: 0px; width: 26px; height: 22px; 
+            background: var(--skin-base); border-radius: 10px 15px 15px 10px; 
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* =========================================
+           MODALES (GLASSMORPHISM)
+           ========================================= */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(11, 17, 32, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+
+        .modal-content {
+            background: var(--surface); width: 100%; max-width: 420px;
+            border-radius: 24px; overflow: hidden; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            transform: scale(0.95) translateY(10px); transition: all 0.3s ease;
+            max-height: 95vh; overflow-y: auto; border: 1px solid var(--border-color);
+        }
+        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
+        .modal-content.wide { max-width: 750px; }
+
+        .modal-header { padding: 25px 30px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; background: var(--surface); z-index: 10; }
+        .modal-header h3 { margin: 0; font-size: 1.3rem; display: flex; align-items: center; gap: 12px; color: var(--brand-navy); font-weight: 800;}
+        .modal-header h3 i { color: var(--brand-blue); font-size: 1.4rem;}
+        .btn-close { background: #F1F5F9; border: none; color: var(--text-muted); width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center;}
+        .btn-close:hover { background: #FEE2E2; color: var(--danger); transform: rotate(90deg);}
+
+        .modal-body { padding: 30px; }
+        .modal-body.grid-form { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 600px) { .modal-body.grid-form { grid-template-columns: 1fr 1fr; } .full-width { grid-column: span 2; } }
+
+        .input-group { text-align: left; }
+        .input-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;}
+        .input-group input, .input-group select { 
+            width: 100%; padding: 14px 18px; border: 1px solid #CBD5E1; border-radius: 12px; 
+            font-family: 'Inter', sans-serif; font-size: 1rem; transition: all 0.3s; background: var(--bg-page); color: var(--brand-dark); font-weight: 500;
+        }
+        .input-group input:focus, .input-group select:focus { outline: none; border-color: var(--brand-blue); background: var(--surface); box-shadow: 0 0 0 4px rgba(0, 68, 204, 0.1); }
+
+        .btn-submit { 
+            width: 100%; padding: 16px; background: var(--brand-navy); color: white; 
+            border: none; border-radius: 12px; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; 
+            cursor: pointer; transition: all 0.3s; margin-top: 15px; box-shadow: 0 4px 15px rgba(0, 31, 77, 0.25);
+        }
+        .btn-submit:hover { background: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 68, 204, 0.35); }
+
+        .modal-footer { padding: 20px 30px; background: #F8FAFC; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 15px; position: sticky; bottom: 0; z-index: 10;}
+        .btn-cancel { background: white; border: 1px solid #CBD5E1; padding: 12px 24px; border-radius: 50px; cursor: pointer; font-weight: 700; font-family: 'Montserrat', sans-serif; color: var(--text-main); font-size: 0.95rem; transition: all 0.2s;}
+        .btn-cancel:hover { background: #F8FAFC; color: var(--danger); border-color: var(--danger);}
+        .btn-save { background: var(--success); color: white; border: none; padding: 12px 28px; border-radius: 50px; cursor: pointer; font-weight: 700; font-family: 'Montserrat', sans-serif; box-shadow: 0 4px 15px rgba(16,185,129,0.3); font-size: 0.95rem; transition: all 0.2s;}
+        .btn-save:hover { background: #059669; transform: translateY(-2px);}
+
+        #loginError { color: var(--danger); font-size: 0.9rem; font-weight: 700; margin-top: 20px; display: none; text-align: center; background: #FEF2F2; padding: 12px; border-radius: 8px; border: 1px solid #FECACA;}
+
+        /* FOOTER */
+        footer { background: var(--brand-navy); color: white; text-align: center; padding: 60px 20px 40px; margin-top: 80px; position: relative; }
+        footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--brand-blue), var(--accent-gold)); }
+        .footer-logo { font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 20px;}
+        .footer-text { font-size: 1.2rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 8px; font-family: 'Playfair Display', serif; }
+
+        /* TOAST (Notificaciones) */
+        .toast-container { position: fixed; bottom: 25px; left: 25px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-start; pointer-events: none; }
+        
+        .toast-msg { 
+            background: rgba(255, 255, 255, 0.98); color: var(--brand-navy); 
+            padding: 16px 24px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); 
+            display: flex; align-items: center; gap: 15px; font-weight: 700; margin-top: 12px; 
+            border: 1px solid var(--border-color); font-size: 0.95rem;
+            border-left: 5px solid var(--brand-blue);
+            animation: slideRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: auto;
+        }
+        .toast-msg i { color: var(--success); font-size: 1.4rem;}
+        @keyframes slideRight { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* SELECCIÓN DE IMÁGENES */
+        .img-selector-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+        .img-tab-btn { flex: 1; padding: 10px; background: var(--surface); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-weight: 700; font-family: 'Montserrat'; color: var(--text-muted); transition: all 0.2s; font-size: 0.85rem;}
+        .img-tab-btn.active { background: var(--brand-navy); color: white; border-color: var(--brand-navy); box-shadow: 0 4px 10px rgba(0,0,0,0.15);}
+        
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-height: 140px; overflow-y: auto; padding-right: 5px;}
+        .gallery-img { width: 100%; height: 65px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: transform 0.2s;}
+        .gallery-img:hover { transform: scale(1.05); }
+        .gallery-img.selected { border-color: var(--brand-blue); box-shadow: 0 4px 10px rgba(0,68,204,0.3);}
+
+        .img-preview { 
+            width: 100%; height: 140px; background-size: cover; background-position: center; 
+            border-radius: 12px; margin-top: 15px; border: 1px solid var(--border-color); 
+            display: flex; align-items: flex-end; padding: 10px; box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+        }
+        .img-preview span { background: rgba(0,0,0,0.7); color: white; font-size: 0.75rem; padding: 6px 12px; border-radius: 6px; font-weight: 700; letter-spacing: 0.5px;}
+
+        /* Loader Overlay */
+        .loader-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.9); z-index: 100000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s;}
+        .loader-spinner { width: 50px; height: 50px; border: 5px solid var(--border-color); border-top-color: var(--brand-blue); border-radius: 50%; animation: loaderSpin 1s linear infinite; margin-bottom: 20px;}
+        @keyframes loaderSpin { to { transform: rotate(360deg); } }
+
+        /* AJUSTES EXTRA RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-info { display: none; }
+            .navbar-wrapper { padding: 0 10px; top: 10px; display: none;}
+            .top-navbar { padding: 8px 15px; border-radius: 12px;}
+            .btn-login-nav span, .btn-logout-nav span { display: none; }
+            .btn-login-nav, .btn-logout-nav { padding: 8px 12px; }
+            
+            .hero { padding: 40px 15px 80px; min-height: 280px;}
+            .hero-glass-card { flex-direction: column; text-align: center; gap: 15px; padding: 30px 20px; border: none;}
+            .hero-text-content { border-left: none; padding-left: 0; }
+            .hero-logo { width: 110px; height: 110px; }
+            
+            .dashboard-bar { padding: 15px; flex-direction: column; align-items: stretch; transform: translateY(-30px); margin: 0 auto 10px; border-radius: 16px;}
+            .search-box { width: 100%; margin-bottom: 15px; }
+            .admin-toolbar { justify-content: stretch; }
+            .btn-add { width: 100%; justify-content: center; }
+            .card-header-content { padding: 15px; flex-direction: column; align-items: flex-start; justify-content: flex-end;}
+            
+            .sys-number { top: 10px; left: 10px; width: 35px; height: 35px; font-size: 1rem;}
+            .card-admin-overlay { top: auto; bottom: 10px; right: 10px; left: auto;}
+            .directory-grid { grid-template-columns: 1fr; }
+            
+            .oite-avatar-container { right: -5px; bottom: 0; flex-direction: column-reverse; align-items: flex-end;}
+            .avatar-speech-bubble { 
+                max-width: 200px; font-size: 0.8rem; padding: 12px 16px; margin-bottom: 10px;
+                border-radius: 16px 16px 0 16px; 
+                transform-origin: bottom right;
+                transform: translateY(10px) translateX(0) scale(0.9);
+            }
+            .toast-container { right: 20px; bottom: 20px; left: 20px; align-items: center;}
+            @keyframes slideRight { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- PANTALLA DE CARGA INICIAL -->
+    <div class="loader-overlay" id="globalLoader">
+        <div class="loader-spinner"></div>
+        <h2 style="font-family: 'Montserrat'; color: var(--brand-navy);">Conectando con la base de datos...</h2>
+    </div>
+
+    <!-- BARRAS SUPERIORES -->
+    <div class="admin-banner admin-only" id="adminBanner">
+        <i class="fa-solid fa-shield-halved"></i> MODO ADMINISTRADOR ACTIVADO
+    </div>
+
+    <div class="navbar-wrapper">
+        <nav class="top-navbar" id="topNavbar">
+            <div class="nav-brand"><i class="fa-solid fa-hospital-user"></i> RIS SAN MARCOS</div>
+            <div class="nav-info">
+                <div class="date-display"><i class="fa-regular fa-calendar"></i> <span id="live-time">Cargando...</span></div>
+                <div class="weather-alert" title="Estado de Red"><i class="fa-solid fa-network-wired"></i> Servidor: Online</div>
+            </div>
+            <div>
+                <button class="btn-login-nav admin-only-hide" onclick="window.openLogin()"><i class="fa-solid fa-user-lock"></i> <span class="desktop-text">Admin</span></button>
+                <button class="btn-logout-nav admin-only" onclick="window.logout()"><i class="fa-solid fa-right-from-bracket"></i> <span class="desktop-text">Salir</span></button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- HERO SECTION ELEGANTE AZUL -->
+    <section class="hero" id="heroSection">
+        <div class="hero-glass-card">
+            <!-- LOGO A LA IZQUIERDA -->
+            <div class="hero-logo-wrapper">
+                <img src="red salud imagen.jpg" alt="Logo RIS San Marcos" class="hero-logo" onclick="window.playLogoEffect()">
+            </div>
+            <!-- TEXTO A LA DERECHA -->
+            <div class="hero-text-content">
+                <h1 class="hero-title serif">Portal de Enlaces Informáticos</h1>
+                <p class="hero-subtitle">Gestión Tecnológica Institucional <span>2026</span></p>
+                <button class="btn-login-nav admin-only-hide" style="display:none; margin: 20px auto 0;" id="btnMobileLogin" onclick="window.openLogin()">
+                    <i class="fa-solid fa-user-lock"></i> Acceso Admin
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="main-container">
+        
+        <!-- BARRA BÚSQUEDA -->
+        <div class="dashboard-bar">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Buscar por sistema, módulo, manual o anexo...">
+            </div>
+            <div class="admin-toolbar admin-only" id="adminToolbar">
+                <button class="btn-add" onclick="window.openSysModal()"><i class="fa-solid fa-plus"></i> Añadir Enlace</button>
+            </div>
+        </div>
+
+        <!-- GRID DE SISTEMAS -->
+        <h2 class="section-header serif"><i class="fa-solid fa-server"></i> Repositorios y Plataformas</h2>
+        <div class="systems-grid" id="systemsContainer">
+            <!-- Se cargará desde Firebase -->
+        </div>
+
+        <!-- SECCIÓN DIVIDIDA: HERRAMIENTAS Y DIRECTORIO -->
+        <div class="two-cols-layout">
+            <!-- HERRAMIENTAS AUXILIARES -->
+            <div class="tools-section">
+                <h2 class="section-header serif"><i class="fa-solid fa-toolbox"></i> Herramientas IT</h2>
+                <div class="tools-grid">
+                    <a href="https://dnirapido.space/" target="_blank" class="tool-card dni-card" data-search="dni busqueda persona rapido reniec identificacion herramienta apoyo">
+                        <div class="tool-icon"><i class="fa-solid fa-id-card-clip"></i></div>
+                        <div class="tool-info">
+                            <h4>Consulta Rápida DNI</h4>
+                            <p>Validación ágil de datos de identidad en línea.</p>
+                        </div>
+                        <div class="tool-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                    </a>
+                    <a href="https://webexcelente.com/" target="_blank" class="tool-card audit-card" data-search="auditoria excel pdf validar reparar web excelente herramienta apoyo">
+                        <div class="tool-icon"><i class="fa-solid fa-file-shield"></i></div>
+                        <div class="tool-info">
+                            <h4>Auditoría de Archivos</h4>
+                            <p>Plataforma para validar documentos Excel y PDF.</p>
+                        </div>
+                        <div class="tool-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- DIRECTORIO DE ANEXOS -->
+            <div class="tools-section">
+                <h2 class="section-header serif" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                    <div><i class="fa-solid fa-address-book"></i> Directorio OITE</div>
+                    <button class="btn-add admin-only" onclick="window.openAnexoModal()" style="font-size: 0.85rem; padding: 8px 16px; border-radius: 8px;"><i class="fa-solid fa-plus"></i> Añadir</button>
+                </h2>
+                <div class="directory-grid" id="anexosContainer">
+                    <!-- Se cargará desde Firebase -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- AVATAR INTERACTIVO CSS 3D -->
+    <div class="oite-avatar-container">
+        <div class="avatar-speech-bubble" id="avatarSpeech">
+            <i class="fa-solid fa-info-circle"></i> ¡Hola! Soy tu asistente de OITE. Aquí encontrarás todos los enlaces de la red.
+        </div>
+        <div class="avatar-css-3d" onclick="window.changeAvatarTip()">
+            <div class="a-arm-l"><div class="a-hand-l"></div></div>
+            <div class="a-neck"></div>
+            <div class="a-shirt-collar"></div>
+            <div class="a-head">
+                <div class="a-ear left"></div>
+                <div class="a-ear right"></div>
+                <div class="a-hair"></div>
+                <div class="a-hair-tuft"></div>
+                <div class="a-brow left"></div>
+                <div class="a-brow right"></div>
+                <div class="a-eye left"></div>
+                <div class="a-eye right"></div>
+                <div class="a-beard">
+                    <div class="a-mouth"><div class="a-tongue"></div></div>
+                </div>
+            </div>
+            <div class="a-vest">
+                <div class="a-vest-zipper"></div>
+                <div class="a-lanyard"></div>
+                <div class="a-lanyard-2"></div>
+                <div class="a-badge"></div>
+                <div class="a-stripe-red"></div>
+                <div class="a-stripe"></div>
+                <div class="a-vest-logo">SAN MARCOS</div>
+            </div>
+            <div class="a-arm-r"><div class="a-hand-r"></div></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo"><i class="fa-solid fa-hospital-user"></i></div>
+        <div class="footer-text">RED DE SALUD INTEGRAL SAN MARCOS</div>
+        <div style="font-size: 0.95rem; color: #94A3B8; margin-top: 10px; font-weight: 500;">Oficina de Informática, Telecomunicaciones y Estadística (OITE) &copy; 2026</div>
+    </footer>
+
+    <!-- MODAL DE LOGIN -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: center; background: transparent; border-bottom: none; padding-top: 40px;">
+                <img src="red salud imagen.jpg" alt="Logo RIS" style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--accent-gold); padding: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);">
+                <button class="btn-close" onclick="window.closeLogin()" style="position: absolute; top: 20px; right: 20px;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body" style="text-align: center; padding-top: 15px;">
+                <h2 style="font-family: 'Playfair Display', serif; color: var(--brand-navy); margin-bottom: 5px; font-size: 1.8rem; font-weight: 800;">Acceso OITE</h2>
+                <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 35px; font-weight: 500;">Ingresa credenciales para modificar los enlaces.</p>
+                <div class="input-group">
+                    <label>Usuario</label>
+                    <input type="text" id="username" placeholder="admin" value="admin">
+                </div>
+                <div class="input-group" style="margin-top: 15px;">
+                    <label>Contraseña</label>
+                    <input type="password" id="password" placeholder="********" value="sanmarcos2026">
+                </div>
+                <button class="btn-submit" onclick="window.doLogin()" style="margin-top: 25px;">Autenticar Sesión <i class="fa-solid fa-arrow-right ms-2"></i></button>
+                <div id="loginError"><i class="fa-solid fa-circle-exclamation"></i> Credenciales incorrectas</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE AGREGAR/EDITAR SISTEMA -->
+    <div class="modal-overlay" id="sysModal">
+        <div class="modal-content wide">
+            <div class="modal-header">
+                <h3 id="sysModalTitle" class="serif"><i class="fa-solid fa-pen-to-square"></i> Configurar Sistema</h3>
+                <button class="btn-close" onclick="window.closeSysModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body grid-form">
+                <div class="input-group full-width">
+                    <label>Nombre del Sistema</label>
+                    <input type="text" id="sysName" placeholder="Ej: SIGA MINSA">
+                </div>
+                <div class="input-group full-width">
+                    <label>URL de Acceso (Enlace web)</label>
+                    <input type="text" id="sysUrl" placeholder="https://...">
+                </div>
+                
+                <!-- SECCIÓN MEJORADA DE IMÁGENES -->
+                <div class="input-group full-width" style="background: var(--bg-page); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <label style="color: var(--brand-navy);"><i class="fa-solid fa-image"></i> Imagen de Fondo de Tarjeta</label>
+                    
+                    <div class="img-selector-tabs">
+                        <button type="button" class="img-tab-btn active" onclick="window.setImgTab('gallery', this)">Galería Minsa</button>
+                        <button type="button" class="img-tab-btn" onclick="window.setImgTab('url', this)">URL Web</button>
+                        <button type="button" class="img-tab-btn" onclick="window.setImgTab('upload', this)">Subir Foto</button>
+                    </div>
+
+                    <div id="img-tab-gallery" class="img-tab-content">
+                        <div class="gallery-grid">
+                            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600" onclick="window.selectGalleryImg(this.src, this)" class="gallery-img selected">
+                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=600" onclick="window.selectGalleryImg(this.src, this)" class="gallery-img">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600" onclick="window.selectGalleryImg(this.src, this)" class="gallery-img">
+                            <img src="https://images.unsplash.com/photo-1530497610245-94d3c16cda28?q=80&w=600" onclick="window.selectGalleryImg(this.src, this)" class="gallery-img">
+                            <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?q=80&w=600" onclick="window.selectGalleryImg(this.src, this)" class="gallery-img">
+                            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=600" onclick="window.selectGalleryImg(this.src, this)" class="gallery-img">
+                        </div>
+                    </div>
+
+                    <div id="img-tab-url" class="img-tab-content" style="display:none;">
+                        <input type="text" id="sysImgUrl" placeholder="https://ejemplo.com/foto.jpg" oninput="window.updatePreviewFromUrl()">
+                    </div>
+
+                    <div id="img-tab-upload" class="img-tab-content" style="display:none;">
+                        <input type="file" id="sysImgUpload" accept="image/*" onchange="window.handleFileUpload(event)" style="background: white; border: 1px dashed var(--brand-blue); cursor: pointer; padding: 10px;">
+                    </div>
+
+                    <div class="img-preview" id="imgPreview" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800');">
+                        <span>Vista Previa</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Estado / Nivel de Seguridad</label>
+                    <select id="sysStatus">
+                        <option value="Privado">Privado</option>
+                        <option value="Público">Público</option>
+                        <option value="Uso Interno">Uso Interno</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Icono (Clase FontAwesome)</label>
+                    <input type="text" id="sysIcon" placeholder="fa-solid fa-cloud" value="fa-solid fa-desktop">
+                </div>
+                <div class="input-group full-width" style="background: var(--bg-page); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <label style="color: var(--brand-navy);"><i class="fa-solid fa-shield-halved"></i> Tipo de Acceso a Mostrar</label>
+                    <select id="sysType" style="margin-bottom: 15px;" onchange="window.toggleCredFields()">
+                        <option value="credenciales">Mostrar Usuario y Contraseña</option>
+                        <option value="aviso">Mostrar Aviso (Ej: Solicitar a OITE)</option>
+                        <option value="libre">Acceso Libre Directo</option>
+                    </select>
+                    
+                    <div id="credFields" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="input-group" id="userGroup">
+                            <label>Usuario (Si aplica)</label>
+                            <input type="text" id="sysUser" placeholder="admin_salud">
+                        </div>
+                        <div class="input-group">
+                            <label id="lblPassAviso">Contraseña</label>
+                            <input type="text" id="sysPass" placeholder="******">
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group full-width">
+                    <label>Componentes Activos (Separados por comas)</label>
+                    <input type="text" id="sysModules" placeholder="Ej: Reportes, Inventario, Personal">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="window.closeSysModal()">Cancelar</button>
+                <button class="btn-save" onclick="window.saveSystem()"><i class="fa-solid fa-check"></i> Guardar Sistema</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE AGREGAR/EDITAR ANEXO -->
+    <div class="modal-overlay" id="anexoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="anexoModalTitle" class="serif"><i class="fa-solid fa-address-book"></i> Configurar Anexo</h3>
+                <button class="btn-close" onclick="window.closeAnexoModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Oficina / Área</label>
+                    <input type="text" id="anexoName" placeholder="Ej: Recursos Humanos">
+                </div>
+                <div class="input-group" style="margin-top: 15px;">
+                    <label>Número de Anexo / Teléfono</label>
+                    <input type="text" id="anexoNum" placeholder="Ej: Anexo 105">
+                </div>
+                <div class="input-group" style="margin-top: 15px;">
+                    <label>Icono (Clase FontAwesome)</label>
+                    <input type="text" id="anexoIcon" placeholder="fa-solid fa-users" value="fa-solid fa-phone">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="window.closeAnexoModal()">Cancelar</button>
+                <button class="btn-save" onclick="window.saveAnexo()"><i class="fa-solid fa-check"></i> Guardar Anexo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor Toast -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ========================================================
+         SCRIPT PRINCIPAL (FIREBASE V9 MODULAR)
+         ======================================================== -->
+    <script type="module">
+        // Importar funciones modulares de Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // =========================================================================
+        // ⚠️ IMPORTANTE: PEGA AQUÍ LA CONFIGURACIÓN DE TU PROYECTO FIREBASE ⚠️
+        // =========================================================================
+                const firebaseConfig = {
+            apiKey: "AIzaSyB-EjemploDeTuClave...",
+            authDomain: "portal-ris-sanmarcos.firebaseapp.com",
+            projectId: "portal-ris-sanmarcos",
+            storageBucket: "portal-ris-sanmarcos.appspot.com",
+            messagingSenderId: "1234567890",
+            appId: "1:123456:web:abcd123"
+        };
+        // =========================================================================
+
+        // INICIALIZAR FIREBASE
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Variables de estado
+        let dbSistemas = [];
+        let dbAnexos = [];
+        let isAdmin = false; 
+        let editingId = null;
+        let editingAnexoId = null;
+        let currentModalImage = "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800";
+
+        // DATOS POR DEFECTO PARA INICIALIZAR (Si la base de datos está vacía)
+        const defaultSistemas = [
+            { nombre: "Repositorio DIRESA (Cloud)", url: "https://cloud.diresacajamarca.gob.pe/", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800", estado: "Privado", icono: "fa-solid fa-cloud", tipoAcceso: "credenciales", usuario: "ditecajamarca", clave: "Ditecajamarca11", modulos: "SISMED, SIEN, Seguimiento Anemia, Reportes HIS 26, Ind. Sistema, Control Calidad, Hechos Vitales" },
+            { nombre: "Manuales HIS (REUNIS)", url: "https://bvs.minsa.gob.pe/manuales-del-sistema-de-informacion-his/", img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800", estado: "Público", icono: "fa-solid fa-book-medical", tipoAcceso: "libre", usuario: "", clave: "", modulos: "Descarga Manuales HIS, Diccionarios de Datos, Guías Oficiales MINSA" },
+            { nombre: "Mapeo Integralidad", url: "#", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800", estado: "Uso Interno", icono: "fa-solid fa-chart-pie", tipoAcceso: "aviso", usuario: "", clave: "Recomendación: Solo Descargar", modulos: "Cartillas, Metas 2026, Población Histórica, Producción 26, Uso Ext/Int, Bases IPRESS" },
+            { nombre: "Seguimiento Curso Vida", url: "https://ovc.diresacajamarca.gob.pe/estadisticas/s-seguimiento_cv", img: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?q=80&w=800", estado: "Privado", icono: "fa-solid fa-dna", tipoAcceso: "aviso", usuario: "", clave: "Gestionar acceso con OITE / RRHH", modulos: "Módulo Seguimiento, Curso de Vida, Metas 2026" },
+            { nombre: "Epidemiología CDC", url: "https://www.dge.gob.pe/portalnuevo/sala-de-situacion/", img: "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?q=80&w=800", estado: "Público", icono: "fa-solid fa-microscope", tipoAcceso: "libre", usuario: "", clave: "", modulos: "Sala Situacional, Indicadores Epidem." },
+            { nombre: "Hechos Vitales (RENIEC)", url: "https://portalrcm.reniec.gob.pe/hechosvitales/MenuPrincipal.do", img: "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?q=80&w=800", estado: "Privado", icono: "fa-solid fa-fingerprint", tipoAcceso: "aviso", usuario: "", clave: "Gestionar usuario y clave a través de DIRESA", modulos: "Hechos Vitales Base, SINADEF (Defunciones), CNV" }
+        ];
+
+        const defaultAnexos = [
+            { titulo: "Soporte OITE", anexo: "Anexo 104", icono: "fa-solid fa-headset" },
+            { titulo: "Dirección Ejecutiva", anexo: "Anexo 101", icono: "fa-solid fa-user-tie" },
+            { titulo: "Recursos Humanos", anexo: "Anexo 105", icono: "fa-solid fa-users-gear" },
+            { titulo: "Unidad de Seguros", anexo: "Anexo 108", icono: "fa-solid fa-file-medical" }
+        ];
+
+        // FUNCIÓN PRINCIPAL PARA CARGAR DATOS
+        async function loadData() {
+            try {
+                // Verificar si hay conexión con el proyecto real de Firebase
+                if(firebaseConfig.projectId === "TU_PROYECTO") {
+                    console.log("Firebase no configurado. Utilizando datos locales de ejemplo.");
+                    dbSistemas = defaultSistemas.map((sys, idx) => ({id: 'local_sys_'+idx, ...sys}));
+                    dbAnexos = defaultAnexos.map((anx, idx) => ({id: 'local_anx_'+idx, ...anx}));
+                    document.getElementById('globalLoader').style.opacity = '0';
+                    setTimeout(() => document.getElementById('globalLoader').style.display = 'none', 500);
+                    renderSystems();
+                    renderAnexos();
+                    return;
+                }
+
+                // Cargar Sistemas
+                const querySistemas = await getDocs(collection(db, "sistemas"));
+                if(querySistemas.empty) {
+                    // Inicializar base de datos si está vacía
+                    for(let sys of defaultSistemas) { await addDoc(collection(db, "sistemas"), sys); }
+                    const q2 = await getDocs(collection(db, "sistemas"));
+                    dbSistemas = q2.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                } else {
+                    dbSistemas = querySistemas.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                }
+
+                // Cargar Anexos
+                const queryAnexos = await getDocs(collection(db, "anexos"));
+                if(queryAnexos.empty) {
+                    for(let anx of defaultAnexos) { await addDoc(collection(db, "anexos"), anx); }
+                    const qA2 = await getDocs(collection(db, "anexos"));
+                    dbAnexos = qA2.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                } else {
+                    dbAnexos = queryAnexos.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                }
+
+                document.getElementById('globalLoader').style.opacity = '0';
+                setTimeout(() => document.getElementById('globalLoader').style.display = 'none', 500);
+                
+                renderSystems();
+                renderAnexos();
+
+            } catch(e) {
+                console.error("Error conectando a Firebase:", e);
+                document.getElementById('globalLoader').innerHTML = '<h2 style="color:var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> Error de Conexión</h2><p>Revisa la configuración de Firebase en el código.</p>';
+            }
+        }
+
+        // LLAMAR A LA CARGA AL INICIAR
+        loadData();
+
+        function renderSystems() {
+            const container = document.getElementById('systemsContainer'); container.innerHTML = '';
+            
+            dbSistemas.forEach((sys, index) => {
+                const numStr = String(index + 1).padStart(2, '0');
+                
+                let credsHtml = '';
+                if (sys.tipoAcceso === 'credenciales') {
+                    credsHtml = `
+                    <div class="cred-box">
+                        <div class="cred-header"><i class="fa-solid fa-key"></i> Credenciales de Acceso</div>
+                        ${sys.usuario ? `<div class="cred-row"><span class="cred-label">Usuario:</span><div class="cred-val-wrap"><span class="cred-val mono" id="u${sys.id}">${sys.usuario}</span><button class="btn-copy" onclick="window.copyToClipboard('u${sys.id}')" title="Copiar"><i class="fa-regular fa-copy"></i></button></div></div>` : ''}
+                        ${sys.clave ? `<div class="cred-row"><span class="cred-label">Clave:</span><div class="cred-val-wrap"><span class="cred-val mono cred-pass" id="p${sys.id}">${sys.clave}</span><button class="btn-copy" onclick="window.copyToClipboard('p${sys.id}')" title="Copiar"><i class="fa-regular fa-copy"></i></button></div></div>` : ''}
+                    </div>`;
+                } else if (sys.tipoAcceso === 'aviso') {
+                    credsHtml = `<div class="alert-box"><div class="icon"><i class="fa-solid fa-circle-exclamation"></i></div><div class="text"><span class="title">Aviso Importante</span><span class="desc">${sys.clave}</span></div></div>`;
+                } else {
+                    credsHtml = `<div class="free-box"><div class="icon"><i class="fa-solid fa-unlock-keyhole"></i></div><div class="text"><span class="title">Acceso Público</span><span class="desc">Ingreso directo sin restricciones.</span></div></div>`;
+                }
+
+                const modulesArray = (sys.modulos || '').split(',').filter(m => m.trim());
+                let chipsHtml = modulesArray.map(mod => `<span class="chip"><i class="fa-solid fa-angle-right"></i> ${mod.trim()}</span>`).join('');
+
+                let adminOverlayHtml = `<div class="card-admin-overlay admin-only"><button class="btn-edit" onclick="window.editSystem('${sys.id}')" title="Editar"><i class="fa-solid fa-pen"></i></button><button class="btn-delete" onclick="window.deleteSystem('${sys.id}')" title="Eliminar"><i class="fa-solid fa-trash"></i></button></div>`;
+                const searchStr = `${sys.nombre} ${sys.modulos} ${sys.estado}`.toLowerCase();
+
+                container.innerHTML += `
+                <div class="sys-card" data-search="${searchStr}">
+                    ${adminOverlayHtml}
+                    <div class="card-img-wrapper">
+                        <div class="card-img-bg" style="background-image: url('${sys.img}');"></div>
+                        <div class="card-img-overlay"></div>
+                        <div class="sys-number">${numStr}</div>
+                        <div class="sys-badge ${sys.estado.includes('Privado') ? 'Privado' : (sys.estado.includes('Interno') ? 'Interno' : 'Público')}">${sys.estado}</div>
+                        <div class="card-header-content">
+                            <h3 class="sys-title serif"><i class="${sys.icono}"></i> ${sys.nombre}</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-content-split">
+                            <div class="card-actions">
+                                <a href="${sys.url}" target="_blank" class="btn-access">Ingresar al Portal <i class="fa-solid fa-arrow-right"></i></a>
+                                ${credsHtml}
+                            </div>
+                            <div class="card-modules">
+                                <div class="module-title"><i class="fa-solid fa-layer-group"></i> Componentes Activos:</div>
+                                <div class="chip-container">${chipsHtml}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            
+            if(document.body.classList.contains('admin-mode')) {
+                document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'flex');
+            }
+        }
+
+        function renderAnexos() {
+            const container = document.getElementById('anexosContainer'); container.innerHTML = '';
+            
+            dbAnexos.forEach(anexo => {
+                let adminOverlayHtml = `<div class="dir-admin-overlay admin-only"><button class="btn-edit" onclick="window.editAnexo('${anexo.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-delete" onclick="window.deleteAnexo('${anexo.id}')"><i class="fa-solid fa-trash"></i></button></div>`;
+                const searchStr = `${anexo.titulo} ${anexo.anexo} anexo soporte telefono`.toLowerCase();
+                
+                container.innerHTML += `
+                <div class="dir-card" data-search="${searchStr}">
+                    ${adminOverlayHtml}
+                    <div class="dir-icon"><i class="${anexo.icono}"></i></div>
+                    <div class="dir-info">
+                        <h4>${anexo.titulo}</h4>
+                        <p>${anexo.anexo}</p>
+                    </div>
+                </div>`;
+            });
+            
+            if(document.body.classList.contains('admin-mode')) {
+                document.querySelectorAll('.dir-admin-overlay').forEach(el => el.style.display = 'flex');
+            }
+        }
+
+        // =========================================
+        // EXPONER FUNCIONES AL ÁMBITO GLOBAL (Necesario al usar type="module")
+        // =========================================
+        window.openLogin = function() { document.getElementById('loginModal').classList.add('active'); };
+        window.closeLogin = function() { document.getElementById('loginModal').classList.remove('active'); document.getElementById('loginError').style.display='none'; };
+        
+        window.doLogin = function() {
+            if(document.getElementById('username').value === 'admin' && document.getElementById('password').value === 'sanmarcos2026') {
+                window.closeLogin();
+                document.body.classList.add('admin-mode');
+                document.getElementById('adminBanner').style.display = 'block'; 
+                showToast("Modo Administrador Autorizado", "fa-shield-check"); 
+                window.checkMobile();
+                renderSystems(); 
+                renderAnexos();
+            } else { document.getElementById('loginError').style.display = 'block'; }
+        };
+
+        window.logout = function() {
+            document.body.classList.remove('admin-mode');
+            document.getElementById('adminBanner').style.display = 'none'; 
+            window.checkMobile();
+            showToast("Sesión cerrada. Vista Pública.", "fa-lock"); 
+            renderSystems(); 
+            renderAnexos();
+        };
+
+        /* --- LÓGICA DE IMÁGENES EN EL MODAL --- */
+        window.setImgTab = function(tabName, btnElement) {
+            document.querySelectorAll('.img-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.img-tab-content').forEach(content => content.style.display = 'none');
+            btnElement.classList.add('active');
+            document.getElementById('img-tab-' + tabName).style.display = 'block';
+        };
+
+        window.selectGalleryImg = function(src, imgElement) {
+            document.querySelectorAll('.gallery-img').forEach(img => img.classList.remove('selected'));
+            imgElement.classList.add('selected');
+            currentModalImage = src;
+            document.getElementById('imgPreview').style.backgroundImage = `url('${currentModalImage}')`;
+        };
+
+        window.updatePreviewFromUrl = function() {
+            const url = document.getElementById('sysImgUrl').value;
+            if(url) {
+                currentModalImage = url;
+                document.getElementById('imgPreview').style.backgroundImage = `url('${currentModalImage}')`;
+            }
+        };
+
+        window.handleFileUpload = function(event) {
+            const file = event.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentModalImage = e.target.result; // Base64 String
+                    document.getElementById('imgPreview').style.backgroundImage = `url('${currentModalImage}')`;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        window.toggleCredFields = function() {
+            const type = document.getElementById('sysType').value;
+            const lblPass = document.getElementById('lblPassAviso');
+            const userGroup = document.getElementById('userGroup');
+            
+            if(type === 'credenciales') {
+                userGroup.style.display = 'block';
+                lblPass.innerText = 'Contraseña';
+                document.getElementById('sysPass').placeholder = '******';
+                document.getElementById('credFields').style.display = 'grid';
+            } else if(type === 'aviso') {
+                userGroup.style.display = 'none';
+                lblPass.innerText = 'Texto del Aviso';
+                document.getElementById('sysPass').placeholder = 'Ej: Contactar a RRHH';
+                document.getElementById('credFields').style.display = 'block';
+            } else {
+                document.getElementById('credFields').style.display = 'none';
+            }
+        };
+
+        // --- CRUD SISTEMAS ---
+        window.openSysModal = function() {
+            editingId = null; 
+            document.getElementById('sysModalTitle').innerHTML = '<i class="fa-solid fa-plus"></i> Añadir Sistema';
+            document.getElementById('sysName').value = ''; 
+            document.getElementById('sysUrl').value = ''; 
+            currentModalImage = 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800';
+            document.getElementById('imgPreview').style.backgroundImage = `url('${currentModalImage}')`;
+            document.getElementById('sysStatus').value = 'Público'; 
+            document.getElementById('sysIcon').value = 'fa-solid fa-desktop'; 
+            document.getElementById('sysType').value = 'libre'; 
+            document.getElementById('sysUser').value = ''; 
+            document.getElementById('sysPass').value = ''; 
+            document.getElementById('sysModules').value = '';
+            window.toggleCredFields();
+            document.getElementById('sysModal').classList.add('active');
+        };
+        
+        window.closeSysModal = function() { document.getElementById('sysModal').classList.remove('active'); };
+
+        window.saveSystem = async function() {
+            const newSys = {
+                nombre: document.getElementById('sysName').value || 'Sistema Sin Nombre', 
+                url: document.getElementById('sysUrl').value || '#', 
+                img: currentModalImage,
+                estado: document.getElementById('sysStatus').value, 
+                icono: document.getElementById('sysIcon').value || 'fa-solid fa-desktop', 
+                tipoAcceso: document.getElementById('sysType').value, 
+                usuario: document.getElementById('sysUser').value, 
+                clave: document.getElementById('sysPass').value, 
+                modulos: document.getElementById('sysModules').value || 'N/A'
+            };
+
+            try {
+                if(firebaseConfig.projectId === "TU_PROYECTO") {
+                    showToast("No se guardó en BD real (Firebase no configurado).", "fa-triangle-exclamation");
+                    window.closeSysModal(); return;
+                }
+
+                document.getElementById('globalLoader').style.display = 'flex';
+                document.getElementById('globalLoader').style.opacity = '1';
+
+                if(editingId) {
+                    await updateDoc(doc(db, "sistemas", editingId), newSys);
+                    showToast("Sistema actualizado con éxito.");
+                } else { 
+                    await addDoc(collection(db, "sistemas"), newSys);
+                    showToast("Nuevo sistema agregado."); 
+                }
+                
+                window.closeSysModal(); 
+                await loadData(); // Refrescar lista
+
+            } catch (e) {
+                console.error(e);
+                showToast("Error al guardar en Firebase", "fa-xmark");
+                document.getElementById('globalLoader').style.display = 'none';
+            }
+        };
+
+        window.editSystem = function(id) {
+            editingId = id; const sys = dbSistemas.find(s => s.id === id);
+            document.getElementById('sysModalTitle').innerHTML = '<i class="fa-solid fa-pen"></i> Editar Sistema';
+            document.getElementById('sysName').value = sys.nombre; 
+            document.getElementById('sysUrl').value = sys.url; 
+            
+            currentModalImage = sys.img;
+            document.getElementById('imgPreview').style.backgroundImage = `url('${currentModalImage}')`;
+            
+            document.getElementById('sysStatus').value = sys.estado; 
+            document.getElementById('sysIcon').value = sys.icono; 
+            document.getElementById('sysType').value = sys.tipoAcceso || 'libre'; 
+            document.getElementById('sysUser').value = sys.usuario || ''; 
+            document.getElementById('sysPass').value = sys.clave || ''; 
+            document.getElementById('sysModules').value = sys.modulos;
+            
+            window.toggleCredFields();
+            document.getElementById('sysModal').classList.add('active');
+        };
+
+        window.deleteSystem = async function(id) { 
+            if(confirm("⚠ ¿Estás seguro que deseas eliminar este enlace permanentemente?")) { 
+                try {
+                    if(firebaseConfig.projectId === "TU_PROYECTO") return; // Demo guard
+                    
+                    document.getElementById('globalLoader').style.display = 'flex';
+                    document.getElementById('globalLoader').style.opacity = '1';
+                    
+                    await deleteDoc(doc(db, "sistemas", id));
+                    showToast("Sistema eliminado.", "fa-trash"); 
+                    await loadData();
+                } catch(e) {
+                    console.error(e);
+                    showToast("Error al eliminar", "fa-xmark");
+                }
+            } 
+        };
+
+        // --- CRUD ANEXOS ---
+        window.openAnexoModal = function() {
+            editingAnexoId = null; document.getElementById('anexoModalTitle').innerHTML = '<i class="fa-solid fa-plus"></i> Añadir Anexo';
+            document.getElementById('anexoName').value = ''; document.getElementById('anexoNum').value = ''; document.getElementById('anexoIcon').value = 'fa-solid fa-phone';
+            document.getElementById('anexoModal').classList.add('active');
+        };
+        window.closeAnexoModal = function() { document.getElementById('anexoModal').classList.remove('active'); };
+
+        window.saveAnexo = async function() {
+            const newAnexo = {
+                titulo: document.getElementById('anexoName').value || 'Nueva Área', 
+                anexo: document.getElementById('anexoNum').value || 'Anexo ---', 
+                icono: document.getElementById('anexoIcon').value || 'fa-solid fa-phone'
+            };
+            try {
+                if(firebaseConfig.projectId === "TU_PROYECTO") { window.closeAnexoModal(); return; }
+                
+                document.getElementById('globalLoader').style.display = 'flex';
+                document.getElementById('globalLoader').style.opacity = '1';
+
+                if(editingAnexoId) {
+                    await updateDoc(doc(db, "anexos", editingAnexoId), newAnexo);
+                    showToast("Anexo actualizado.");
+                } else { 
+                    await addDoc(collection(db, "anexos"), newAnexo);
+                    showToast("Nuevo anexo agregado."); 
+                }
+                window.closeAnexoModal(); await loadData();
+            } catch(e) {
+                console.error(e); showToast("Error al guardar", "fa-xmark");
+            }
+        };
+
+        window.editAnexo = function(id) {
+            editingAnexoId = id; const anexo = dbAnexos.find(a => a.id === id);
+            document.getElementById('anexoModalTitle').innerHTML = '<i class="fa-solid fa-pen"></i> Editar Anexo';
+            document.getElementById('anexoName').value = anexo.titulo; document.getElementById('anexoNum').value = anexo.anexo; document.getElementById('anexoIcon').value = anexo.icono;
+            document.getElementById('anexoModal').classList.add('active');
+        };
+
+        window.deleteAnexo = async function(id) { 
+            if(confirm("⚠ ¿Eliminar este anexo del directorio?")) { 
+                try {
+                    if(firebaseConfig.projectId === "TU_PROYECTO") return;
+                    document.getElementById('globalLoader').style.display = 'flex';
+                    document.getElementById('globalLoader').style.opacity = '1';
+                    await deleteDoc(doc(db, "anexos", id));
+                    showToast("Anexo eliminado.", "fa-trash"); 
+                    await loadData();
+                } catch(e) { console.error(e); showToast("Error al eliminar", "fa-xmark");}
+            } 
+        };
+
+        // ==========================================
+        // UTILIDADES Y AVATAR
+        // ==========================================
+        function updateClock() {
+            const now = new Date(); const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+            document.getElementById('live-time').textContent = now.toLocaleDateString('es-PE', options).replace(/^./, str => str.toUpperCase());
+        }
+        setInterval(updateClock, 1000); updateClock();
+
+        window.copyToClipboard = function(elementId) { navigator.clipboard.writeText(document.getElementById(elementId).innerText).then(() => showToast(`Copiado al portapapeles`, "fa-copy")); };
+
+        function showToast(msg, icon = 'fa-check-circle') {
+            const container = document.getElementById('toastContainer'); const toast = document.createElement('div');
+            toast.className = 'toast-msg'; toast.innerHTML = `<i><i class="fa-solid ${icon}"></i></i> <span class="mono">${msg}</span>`;
+            container.appendChild(toast); setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateY(100%)'; setTimeout(() => toast.remove(), 400); }, 3000);
+        }
+
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('.sys-card, .tool-card, .dir-card').forEach(item => {
+                if(item.getAttribute('data-search') && item.getAttribute('data-search').toLowerCase().includes(term)) item.classList.remove('hidden'); else item.classList.add('hidden');
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.navbar-wrapper');
+            if(window.innerWidth > 768) {
+                if(window.scrollY > 50) { nav.style.padding = '0'; nav.style.top = '0'; document.querySelector('.top-navbar').style.borderRadius = '0';} 
+                else { nav.style.padding = '0 15px'; nav.style.top = '15px'; document.querySelector('.top-navbar').style.borderRadius = '50px';}
+            }
+        });
+
+        window.playLogoEffect = function() {
+            showToast("Plataforma OITE: Sistema Iniciado", "fa-terminal");
+            const logo = document.querySelector('.hero-logo-wrapper');
+            logo.style.transform = 'scale(0.95)'; setTimeout(() => { logo.style.transform = 'translateY(-5px) scale(1)'; }, 150);
+        };
+
+        // Lógica del Avatar OITE
+        const tips = [
+            "¡Hola! Soy tu asistente de OITE. Aquí encontrarás todos los enlaces de la red.",
+            "Usa el buscador para encontrar rápidamente los enlaces.",
+            "Si la base de datos no carga, asegúrate de configurar Firebase en el código.",
+            "Si tienes dudas con el sistema HIS, revisa los manuales en el enlace 02.",
+            "Asegúrate de cerrar sesión al terminar tu turno."
+        ];
+        let tipIndex = 0;
+        
+        window.changeAvatarTip = function() {
+            const bubble = document.getElementById('avatarSpeech');
+            bubble.classList.remove('active');
+            
+            setTimeout(() => {
+                tipIndex = (tipIndex + 1) % tips.length;
+                bubble.innerHTML = `<i class="fa-solid fa-info-circle"></i> ${tips[tipIndex]}`;
+                bubble.classList.add('active');
+            }, 300);
+        };
+
+        // Mostrar el primer tip al cargar la página tras unos segundos
+        setTimeout(() => {
+            document.getElementById('avatarSpeech').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('avatarSpeech').classList.remove('active');
+            }, 6000);
+        }, 2500);
+
+        window.checkMobile = function() {
+            const navbarWrapper = document.querySelector('.navbar-wrapper');
+            const adminMode = document.body.classList.contains('admin-mode');
+            
+            if (window.innerWidth <= 768) {
+                if(!adminMode) {
+                    const mobileBtn = document.getElementById('btnMobileLogin');
+                    if(mobileBtn) mobileBtn.style.display = 'flex';
+                }
+                if(navbarWrapper) navbarWrapper.style.display = 'none';
+                
+                const avatarContainer = document.querySelector('.oite-avatar-container');
+                const speechBubble = document.querySelector('.avatar-speech-bubble');
+                
+                if(avatarContainer && speechBubble) {
+                    avatarContainer.style.flexDirection = 'row';
+                    speechBubble.style.transformOrigin = 'bottom left';
+                    speechBubble.style.borderRadius = '16px 16px 16px 0';
+                    if(speechBubble.classList.contains('active')){
+                       speechBubble.style.transform = 'translateY(0) translateX(0) scale(1)';
+                    } else {
+                       speechBubble.style.transform = 'translateY(10px) translateX(-20px) scale(0.9)';
+                    }
+                }
+            } else {
+                const mobileBtn = document.getElementById('btnMobileLogin');
+                if(mobileBtn) mobileBtn.style.display = 'none';
+                if(navbarWrapper) navbarWrapper.style.display = 'flex';
+                
+                const avatarContainer = document.querySelector('.oite-avatar-container');
+                const speechBubble = document.querySelector('.avatar-speech-bubble');
+                
+                if(avatarContainer && speechBubble) {
+                    avatarContainer.style.flexDirection = 'row-reverse';
+                    speechBubble.style.transformOrigin = 'bottom right';
+                    speechBubble.style.borderRadius = '20px 20px 0 20px';
+                    if(speechBubble.classList.contains('active')){
+                       speechBubble.style.transform = 'translateY(0) translateX(0) scale(1)';
+                    } else {
+                       speechBubble.style.transform = 'translateY(10px) translateX(20px) scale(0.9)';
+                    }
+                }
+            }
+        };
+        window.addEventListener('resize', window.checkMobile);
+    </script>
+</body>
+</html>
