@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Dinámico - RIS San Marcos</title>
+    <title>Portal Web - RIS San Marcos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     
     <style>
         :root {
@@ -21,9 +20,8 @@
         .top-bar-left { display: flex; align-items: center; gap: 12px; font-weight: 800; color: var(--primary-blue); font-size: 15px; letter-spacing: 0.5px;}
         .top-bar-center { display: flex; gap: 15px; font-size: 13px; color: var(--text-gray); font-weight: 600;}
         .top-bar-center div { display: flex; align-items: center; gap: 8px; background: white; padding: 6px 14px; border-radius: 30px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
-        .btn-login-top { background: #e11d48; color: white; padding: 8px 22px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; transition: 0.3s; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(225, 29, 72, 0.2); }
-        .btn-login-top.btn-admin { background: var(--primary-blue); box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2); }
-        .btn-login-top:hover { transform: translateY(-2px); opacity: 0.9; }
+        .btn-github { background: #1e293b; color: white; padding: 8px 22px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; transition: 0.3s; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2); }
+        .btn-github:hover { transform: translateY(-2px); opacity: 0.9; }
 
         /* HERO HEADER */
         .hero-header { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 80px 20px 110px; text-align: center; position: relative; overflow: hidden; }
@@ -54,34 +52,18 @@
         .title-icon { width: 35px; height: 35px; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: white; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .title-icon.bg-blue { background: #2563eb; }
         .title-icon.bg-green { background: #10b981; }
-        
-        .btn-add { background: #10b981; color: white; border: none; padding: 10px 22px; border-radius: 30px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); font-size: 14px; display: none;}
-        .btn-add.visible { display: flex; }
-        .btn-add:hover { background: #059669; transform: translateY(-2px);}
 
         /* GRID Y TARJETAS */
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); gap: 30px; }
         .card { background: white; border-radius: var(--card-radius); overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.03); border: 1px solid var(--border-color); display: flex; flex-direction: column; transition: all 0.3s ease; position: relative;}
         .card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.08); transform: translateY(-6px); border-color: #cbd5e1;}
-        
-        .card.sortable-ghost { opacity: 0.4; transform: scale(0.95); background: #eff6ff; }
-        .card.sortable-drag { box-shadow: 0 25px 50px rgba(0,0,0,0.2) !important; cursor: grabbing !important; }
 
         .card-header { height: 160px; background-size: cover; background-position: center; position: relative; display: flex; align-items: center; padding: 0 30px; }
         .card-header::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to right, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.3) 100%); }
         
-        .drag-handle { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.8); background: rgba(0,0,0,0.4); padding: 5px 20px; border-radius: 20px; cursor: grab; z-index: 5; font-size: 12px; backdrop-filter: blur(5px); display: flex; align-items: center; gap: 5px; opacity: 0; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2);}
-        .card:hover .drag-handle { opacity: 1; }
-        .drag-handle:active { cursor: grabbing; }
-
         .card-badge-top { position: absolute; top: 20px; right: 20px; color: white; font-size: 10px; font-weight: 800; padding: 6px 14px; border-radius: 20px; text-transform: uppercase; z-index: 2; box-shadow: 0 4px 10px rgba(0,0,0,0.15); letter-spacing: 0.5px; }
-        .card-title { position: relative; z-index: 2; color: white; font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 12px;}
+        .card-title { position: relative; z-index: 2; color: white; font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 12px;}
         
-        .admin-controls { position: absolute; bottom: 15px; right: 15px; z-index: 2; display: flex; gap: 8px;}
-        .btn-edit, .btn-del { width: 35px; height: 35px; border-radius: 10px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; color: white; transition: 0.2s; backdrop-filter: blur(5px);}
-        .btn-edit { background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255,255,255,0.3); } .btn-edit:hover { background: var(--accent-blue); border-color: var(--accent-blue);}
-        .btn-del { background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255,255,255,0.3); } .btn-del:hover { background: #e11d48; border-color: #e11d48;}
-
         .card-body { padding: 25px; display: flex; gap: 20px; flex: 1; }
         .card-left { flex: 1; display: flex; flex-direction: column; gap: 15px; }
         .card-right { flex: 1.2; border-left: 1px dashed #cbd5e1; padding-left: 20px; display: flex; flex-direction: column; }
@@ -112,8 +94,8 @@
         .bottom-sections-wrapper { background: white; border-top: 1px solid var(--border-color); padding: 60px 40px; margin-top: 20px;}
         .bottom-sections-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px;}
         
+        /* Herramientas IT */
         .tools-grid { display: flex; flex-direction: column; gap: 15px;}
-        .tool-wrapper { position: relative; }
         .tool-card { background: #f8fafc; border: 1px solid transparent; border-radius: 12px; padding: 15px 20px; display: flex; align-items: center; gap: 20px; text-decoration: none; transition: 0.3s; }
         .tool-card:hover { background: white; border-color: #cbd5e1; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transform: translateX(5px);}
         .tool-icon-box { width: 45px; height: 45px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 20px; flex-shrink: 0;}
@@ -123,8 +105,8 @@
         .tool-arrow { color: #cbd5e1; font-size: 18px; transition: 0.3s;}
         .tool-card:hover .tool-arrow { color: var(--accent-blue); transform: translateX(5px);}
 
+        /* Directorio Contactos */
         .directory-grid { display: flex; flex-direction: column; gap: 15px;}
-        .dir-wrapper { position: relative; }
         .dir-card { background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 15px 20px; display: flex; align-items: center; gap: 20px; transition: 0.3s; position: relative;}
         .dir-card:hover { border-color: #94a3b8; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
         .dir-icon { width: 45px; height: 45px; background: #f1f5f9; color: var(--text-gray); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 18px; flex-shrink: 0;}
@@ -134,52 +116,22 @@
         .dir-info p { margin: 4px 0 0 0; font-size: 12px; color: var(--text-gray); font-weight: 600;}
         .dir-anexo { background: var(--primary-blue); color: white; padding: 4px 10px; border-radius: 15px; font-size: 11px; font-weight: 800; letter-spacing: 0.5px; white-space: nowrap;}
 
-        .admin-controls-sm { position: absolute; right: 10px; top: 10px; display: none; gap: 5px; z-index: 10; }
-        .tool-wrapper:hover .admin-controls-sm, .dir-wrapper:hover .admin-controls-sm, .aviso-wrapper:hover .admin-controls-sm { display: flex; }
-        .btn-sm { width: 28px; height: 28px; border-radius: 8px; border: none; cursor: pointer; color: white; display: flex; justify-content: center; align-items: center; font-size: 11px; transition: 0.2s; }
-        .btn-sm.edit { background: #3b82f6; } .btn-sm.edit:hover { background: #2563eb; }
-        .btn-sm.del { background: #ef4444; } .btn-sm.del:hover { background: #dc2626; }
-
-        /* AVISOS ADMIN SECTION */
-        #adminAvisosSection { display: none; background: #f8fafc; border-top: 1px dashed #cbd5e1; padding-bottom: 120px; }
-        .avisos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;}
-        .aviso-wrapper { position: relative;}
-        .aviso-card { background: white; border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; font-size: 13px; color: var(--text-dark); display: flex; gap: 15px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
-        .aviso-card i { color: #8b5cf6; font-size: 20px;}
-
         /* FOOTER */
         .main-footer { background: var(--primary-blue); color: white; text-align: center; padding: 25px 20px; font-size: 13px; border-top: 4px solid var(--accent-blue); display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 15px;}
         .footer-time { font-weight: 700; color: #60a5fa; background: rgba(255,255,255,0.1); padding: 6px 15px; border-radius: 20px; display: inline-flex; align-items: center; gap: 8px;}
 
-        /* AVATAR DRAG & DROP */
+        /* AVATAR DRAG & DROP Y FLIP */
         .avatar-draggable-container { position: fixed; right: 20px; bottom: 80px; z-index: 9999; display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: grab; }
         .avatar-draggable-container:active { cursor: grabbing; }
         .avatar-main-img { width: 140px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2)); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; }
         .avatar-main-img.flipped { transform: scaleX(-1); }
         .avatar-main-img:hover { filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)); }
         
-        .speech-bubble-main { background: white; padding: 15px 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); font-size: 13px; font-weight: 600; color: var(--primary-blue); border: 1px solid var(--border-color); opacity: 0; transform: translateY(20px); transition: 0.3s; pointer-events: auto; position: absolute; top: -70px; width: 200px; text-align: center; }
+        .speech-bubble-main { background: white; padding: 15px 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); font-size: 13px; font-weight: 600; color: var(--primary-blue); border: 1px solid var(--border-color); opacity: 0; transform: translateY(20px); transition: 0.3s; pointer-events: auto; position: absolute; top: -70px; width: 240px; text-align: center; }
         .speech-bubble-main.show { opacity: 1; transform: translateY(0); }
         .speech-bubble-main i { color: var(--accent-blue); margin-right: 5px; font-size: 16px; vertical-align: middle;}
         .speech-bubble-main::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); border-width: 8px 8px 0; border-style: solid; border-color: white transparent transparent transparent; }
 
-        /* MODALES */
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px); z-index: 10000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s;}
-        .overlay.active { display: flex; opacity: 1; }
-        .modal-box { background: white; padding: 40px; border-radius: 24px; width: 380px; box-shadow: 0 25px 50px rgba(0,0,0,0.2); position: relative; transform: translateY(20px); transition: transform 0.3s;}
-        .overlay.active .modal-box { transform: translateY(0); }
-        .modal-box.large { width: 650px; max-height: 90vh; overflow-y: auto;}
-        .modal-box h2 { margin: 0 0 20px; color: var(--primary-blue); font-weight: 800; font-size: 22px; display: flex; align-items: center; gap: 10px;}
-        .modal-box .form-group { margin-bottom: 16px; text-align: left;}
-        .modal-box label { display: block; font-size: 11px; font-weight: 800; color: var(--text-gray); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;}
-        .modal-box input, .modal-box select, .modal-box textarea { width: 100%; box-sizing: border-box; padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 12px; font-family: 'Plus Jakarta Sans'; font-size: 14px; background: #f8fafc; transition: 0.2s;}
-        .modal-box input:focus, .modal-box select:focus, .modal-box textarea:focus { outline: none; border-color: var(--accent-blue); background: white; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);}
-        .modal-box button[type="submit"] { width: 100%; background: var(--primary-blue); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 15px; transition: 0.3s; margin-top: 10px;}
-        .modal-box button[type="submit"]:hover { background: var(--accent-blue); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);}
-        .close-modal { position: absolute; top: 20px; right: 20px; background: #f1f5f9; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 14px; color: var(--text-gray); cursor: pointer; transition: 0.2s;}
-        .close-modal:hover { background: #e2e8f0; color: var(--primary-blue);}
-
-        .login-error-modal { background: #fef2f2; border: 1px dashed #fca5a5; border-radius: 10px; color: #b91c1c; padding: 12px; margin-bottom: 20px; font-size: 13px; font-weight: 600; text-align: left; display: flex; align-items: center; gap: 8px; display: none;}
         .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--primary-blue); color: white; padding: 12px 24px; border-radius: 30px; font-weight: 600; font-size: 13px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transition: 0.3s; z-index: 9999; pointer-events: none; display: flex; align-items: center; gap: 8px;}
         .toast.show { opacity: 1; bottom: 50px; }
         .toast i { color: #10b981;}
@@ -203,9 +155,8 @@
         <div><i class="fas fa-server" style="color: #10b981;"></i> <span>Online</span></div>
     </div>
     <div>
-        <button id="btnLogInOut" class="btn-login-top btn-admin" onclick="window.abrirModal('loginModal')">
-            <i class="fas fa-user-shield"></i> Área Admin
-        </button>
+        <!-- En GitHub Pages no hay backend, así que el botón te lleva al repositorio -->
+        <a href="https://github.com/" target="_blank" class="btn-github"><i class="fab fa-github"></i> Código Fuente</a>
     </div>
 </div>
 
@@ -233,51 +184,444 @@
         <div class="section-title">
             <div class="title-icon bg-blue"><i class="fas fa-layer-group"></i></div> REPOSITORIOS Y PLATAFORMAS
         </div>
-        <button id="btnAddSistema" class="btn-add" onclick="window.abrirModalSistema()"><i class="fas fa-plus"></i> Nuevo Enlace</button>
     </div>
 
     <div class="cards-grid" id="gridSistemas">
-        <!-- Contenido inyectado vía JS -->
+        <!-- 01 CLOUD -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #e11d48;">PRIVADO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">01</span>
+                    <i class="fas fa-cloud"></i> Repositorio DIRESA CAJAMARCA
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="https://cloud.diresacajamarca.gob.pe/" class="btn-action" target="_blank">Ingresar al Portal <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Acceso Cloud</div></div>
+                    <div class="public-creds">
+                        <div class="public-creds-title">Credenciales de Acceso</div>
+                        <div class="cred-item" onclick="window.copiarTxt('ditecajamarca')" title="Clic para copiar usuario">
+                            <span><i class="fas fa-user"></i> <span>ditecajamarca</span></span><i class="fas fa-copy copy-icon"></i>
+                        </div>
+                        <div class="cred-item" onclick="window.copiarTxt('Ditecajamarca11')" title="Clic para copiar clave">
+                            <span><i class="fas fa-key"></i> <span>Ditecajamarca11</span></span><i class="fas fa-copy copy-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> SISMED</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> SIEN</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Seguimiento Anemia</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Reportes HIS 26</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Ind. Sistema</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Control Calidad</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Hechos Vitales</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 02 REUNIS -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #16a34a;">PÚBLICO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">02</span>
+                    <i class="fas fa-book-medical"></i> Manuales HIS - REUNIS
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="https://bvs.minsa.gob.pe/manuales-del-sistema-de-informacion-his/" class="btn-action" target="_blank">Consultar Manuales <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Es de acceso libre.</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> Acceso a REUNIS</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Descarga de MANUALES HIS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 03 MAPEO -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #16a34a;">PÚBLICO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">03</span>
+                    <i class="fas fa-map-marked-alt"></i> MAPEO INTEGRALIDAD
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="#" class="btn-action disabled" target="_blank">Ver Mapeo <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Se recomienda 'solo descargar'.</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> Herramientas 2026</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Cartillas Integralidad</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Metas 2026</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Población Histórico</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Producción 26</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Ext. Uso</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 04 CURSO VIDA -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #ea580c;">RESTRINGIDO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">04</span>
+                    <i class="fas fa-heartbeat"></i> Seguimiento CURSO DE VIDA
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="#" class="btn-action disabled" target="_blank">Acceder <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Gestionar con OITE y RRHH</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> ONE VISION CLINIC</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Seguimiento ONE VISION</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Módulo SEGUIMIENTO</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Bases Acumuladas</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Integralidad por IPRESS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 05 EPIDEMIOLOGIA -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #16a34a;">PÚBLICO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">05</span>
+                    <i class="fas fa-chart-line"></i> EPIDEMIOLOGÍA
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="https://www.dge.gob.pe/portalnuevo/sala-de-situacion/" class="btn-action" target="_blank">Ver Sala <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>No requiere credenciales.</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> Sala Situacional</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Indicadores Epidemiológicos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 06 RENIEC -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #e11d48;">PRIVADO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">06</span>
+                    <i class="fas fa-baby"></i> HECHOS VITALES (RENIEC)
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="https://portalrcm.reniec.gob.pe/hechosvitales/MenuPrincipal.do" class="btn-action" target="_blank">Ingresar al Portal <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Requiere gestionar usuario a través de DIRESA</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> Fuente RENIEC</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Hechos Vitales RENIEC</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> SINADEF</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> CNV</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 07 COMUNIDADES -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #16a34a;">PÚBLICO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">07</span>
+                    <i class="fas fa-globe-americas"></i> COMUNIDADES PERÚ
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="http://sige.inei.gob.pe/test/atlas/" class="btn-action" target="_blank">Ingresar al Atlas <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Acceder direccionando comunidad.</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> Centros Poblados</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> INEI</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Mapeo Digital</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 08 SUSALUD -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #ea580c;">RESTRINGIDO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">08</span>
+                    <i class="fas fa-shield-alt"></i> ACREDITA SALUD (SUSALUD)
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="https://app8.susalud.gob.pe:8380/login" class="btn-action" target="_blank">Verificar <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Clave gestionada por RED SALUD</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> Sistema SUSALUD</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Verificación del Asegurado</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 09 RENIPRESS -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #16a34a;">PÚBLICO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">09</span>
+                    <i class="fas fa-hospital"></i> GUÍA RENIPRESS SALUD
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="http://app20.susalud.gob.pe:8080/registro-renipress-webapp/listadoEstablecimientosRegistrados.htm" class="btn-action" target="_blank">Buscar IPRESS <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Acceso libre</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> IPRESS del Perú</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Guía IPRESS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 ESCALE -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #16a34a;">PÚBLICO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">10</span>
+                    <i class="fas fa-school"></i> ESCALE - II EE DEL PERÚ
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="https://escale.minedu.gob.pe/web/inicio/padron-de-iiee" class="btn-action" target="_blank">Consultar Escale <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Acceso libre</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> Guía de información</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Padrón II EE</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11 SEGUROS -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #16a34a;">PÚBLICO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">11</span>
+                    <i class="fab fa-google-drive"></i> INFORMACIÓN UNIDAD SEGUROS
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="https://drive.google.com/drive/folders/1PSMuv9i_v9KtyJnpxz0B47YDjoBXl-0K" class="btn-action" target="_blank">Descargar FUA <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Acceso a Drive libre</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> FUIA MODEL</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> Modelos FUA 2026</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 12 TABLERO -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #16a34a;">PÚBLICO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">12</span>
+                    <i class="fas fa-tachometer-alt"></i> TABLERO DE MANDO INTEGRAL
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="https://sir.diresacajamarca.gob.pe/risc/#/resumen" class="btn-action" target="_blank">Ver Tablero <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Consulta libre</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> Act. marzo 2026</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> INTEGRALIDAD</div>
+                        <div class="tag-item"><i class="fas fa-check"></i> V2.0 2026</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 13 MORBILIDAD -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #16a34a;">PÚBLICO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">13</span>
+                    <i class="fas fa-notes-medical"></i> REUNIS - MORBILIDAD GENERAL
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="#" class="btn-action disabled" target="_blank">Ver Data <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Información General</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> DATA MORBILIDAD</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 14 DEMOGRAFICA -->
+        <div class="card item-card item-filtrable">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?auto=format&fit=crop&w=800&q=80');">
+                <div class="card-badge-top" style="background: #16a34a;">PÚBLICO</div>
+                <h3 class="card-title">
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">14</span>
+                    <i class="fas fa-users"></i> INFORMACIÓN DEMOGRÁFICA
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-left">
+                    <a href="#" class="btn-action disabled" target="_blank">Ver Data <i class="fas fa-arrow-right"></i></a>
+                    <div class="card-alert"><i class="fas fa-exclamation-circle"></i><div><strong>Nota / Aviso</strong>Información General</div></div>
+                </div>
+                <div class="card-right">
+                    <div class="components-title">Componentes y Anexos:</div>
+                    <div class="tags-container">
+                        <div class="tag-item"><i class="fas fa-check"></i> INFO DEMOGRÁFICA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </main>
 
 <div class="bottom-sections-wrapper">
     <div class="bottom-sections-container">
-        <!-- HERRAMIENTAS IT DINÁMICAS -->
+        <!-- HERRAMIENTAS IT -->
         <div>
             <div class="section-header" style="margin-bottom: 25px;">
                 <div class="section-title">
                     <div class="title-icon bg-blue"><i class="fas fa-toolbox"></i></div> HERRAMIENTAS IT
                 </div>
-                <button id="btnAddHerramienta" class="btn-add" style="padding: 6px 15px; font-size:12px;" onclick="window.abrirModalHerramienta()"><i class="fas fa-plus"></i></button>
             </div>
-            <div class="tools-grid" id="gridHerramientas"></div>
+            
+            <div class="tools-grid">
+                <div class="tool-wrapper item-filtrable">
+                    <a href="http://dnirapido.space/" target="_blank" class="tool-card">
+                        <div class="tool-icon-box" style="background: #e0e7ff; color: #1d4ed8;"><i class="fas fa-id-card"></i></div>
+                        <div class="tool-info"><h4>Consulta Rápida DNI</h4><p>Validación ágil de datos de identidad en línea.</p></div>
+                        <div class="tool-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </a>
+                </div>
+                <div class="tool-wrapper item-filtrable">
+                    <a href="https://webexcelente.com/" target="_blank" class="tool-card">
+                        <div class="tool-icon-box" style="background: #dcfce7; color: #15803d;"><i class="fas fa-file-shield"></i></div>
+                        <div class="tool-info"><h4>Auditoría de Archivos</h4><p>Plataforma para validar documentos Excel y PDF.</p></div>
+                        <div class="tool-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </a>
+                </div>
+                <div class="tool-wrapper item-filtrable">
+                    <a href="https://anydesk.com/es" target="_blank" class="tool-card">
+                        <div class="tool-icon-box" style="background: #ffe4e6; color: #e11d48;"><i class="fas fa-laptop-medical"></i></div>
+                        <div class="tool-info"><h4>Soporte Remoto (AnyDesk)</h4><p>Descarga AnyDesk para asistencia técnica.</p></div>
+                        <div class="tool-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </a>
+                </div>
+            </div>
         </div>
 
-        <!-- DIRECTORIO DE CONTACTOS DINÁMICO -->
+        <!-- DIRECTORIO DE CONTACTOS -->
         <div>
             <div class="section-header" style="margin-bottom: 25px;">
                 <div class="section-title">
                     <div class="title-icon bg-green"><i class="fas fa-address-book"></i></div> DIRECTORIO OITE
                 </div>
-                <button id="btnAddDirectorio" class="btn-add" style="padding: 6px 15px; font-size:12px;" onclick="window.abrirModalDirectorio()"><i class="fas fa-plus"></i></button>
             </div>
-            <div class="directory-grid" id="gridDirectorio"></div>
-        </div>
-    </div>
-</div>
-
-<!-- GESTIÓN DE AVISOS DEL AVATAR (ADMIN) -->
-<div id="adminAvisosSection" class="bottom-sections-wrapper" style="background: #f8fafc; border-top: 1px dashed #cbd5e1; padding-bottom: 120px;">
-    <div class="bottom-sections-container" style="grid-template-columns: 1fr;">
-        <div class="section-header" style="margin-bottom: 20px;">
-            <div class="section-title">
-                <div class="title-icon" style="background: #8b5cf6;"><i class="fas fa-comment-dots"></i></div> GESTIÓN DE AVISOS (AVATAR)
+            
+            <div class="directory-grid">
+                <div class="dir-wrapper item-filtrable">
+                    <div class="dir-card">
+                        <div class="dir-icon"><i class="fas fa-notes-medical"></i></div>
+                        <div class="dir-info">
+                            <div class="dir-info-header"><h4>Soporte HIS MINSA</h4><div class="dir-anexo">Anexo: 101</div></div>
+                            <p>Área de Estadística</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="dir-wrapper item-filtrable">
+                    <div class="dir-card">
+                        <div class="dir-icon"><i class="fas fa-wifi"></i></div>
+                        <div class="dir-info">
+                            <div class="dir-info-header"><h4>Redes y Conectividad</h4><div class="dir-anexo">Anexo: 105</div></div>
+                            <p>OITE San Marcos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="dir-wrapper item-filtrable">
+                    <div class="dir-card">
+                        <div class="dir-icon"><i class="fas fa-users"></i></div>
+                        <div class="dir-info">
+                            <div class="dir-info-header"><h4>Recursos Humanos</h4><div class="dir-anexo">Anexo: 102</div></div>
+                            <p>Gestión de Personal</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button class="btn-add" style="background: #8b5cf6; display: flex;" onclick="window.abrirModalAviso()"><i class="fas fa-plus"></i> Nuevo Aviso</button>
         </div>
-        <div style="color: var(--text-gray); font-size: 13px; margin-bottom: 20px;">Estos son los mensajes que el asistente virtual dirá de forma rotativa a los usuarios.</div>
-        <div class="avisos-grid" id="gridAvisos"></div>
     </div>
 </div>
 
@@ -289,468 +633,12 @@
 <!-- AVATAR FLOTANTE ARRASTRABLE -->
 <div class="avatar-draggable-container" id="draggableAvatar">
     <div class="speech-bubble-main" id="mainMsg">
-        <i class="fas fa-comment-dots"></i> Cargando asistente...
+        <i class="fas fa-comment-dots"></i> ¡Hola! Bienvenido al portal de San Marcos.
     </div>
     <img src="image_740b1d.png" class="avatar-main-img" id="avatarImg" alt="Asistente" onerror="this.src='https://cdn3d.iconscout.com/3d/premium/thumb/businessman-4996969-4159591.png'">
 </div>
 
-<!-- MODALES (HTML estático) -->
-<div class="overlay" id="loginModal">
-    <div class="modal-box" style="text-align: center;">
-        <button class="close-modal" onclick="window.cerrarModal('loginModal')"><i class="fas fa-times"></i></button>
-        <div style="background: #eff6ff; width: 70px; height: 70px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px;">
-            <i class="fas fa-user-shield" style="font-size: 30px; color: var(--accent-blue);"></i>
-        </div>
-        <h2 style="justify-content: center; font-size: 20px;">Área Administrador</h2>
-        <p style="color: var(--text-gray); margin-bottom: 20px; font-size: 13px;">Ingresa tus credenciales para gestionar el portal.</p>
-        
-        <div id="loginErrorMsg" class="login-error-modal">
-            <i class="fas fa-exclamation-circle"></i> <span>Credenciales incorrectas</span>
-        </div>
-
-        <form id="formLogin">
-            <div class="form-group"><input type="email" id="loginEmail" placeholder="Correo (ej. admin@sanmarcos.com)" required></div>
-            <div class="form-group"><input type="password" id="loginPass" placeholder="Contraseña" required></div>
-            <button type="submit">Ingresar</button>
-        </form>
-    </div>
-</div>
-
-<!-- Modales de Formularios (Mantienen la misma estructura, controlados por JS) -->
-<div class="overlay" id="modalSistema">
-    <div class="modal-box large">
-        <button class="close-modal" onclick="window.cerrarModal('modalSistema')"><i class="fas fa-times"></i></button>
-        <h2 id="modalSistemaTitle"><i class="fas fa-layer-group"></i> Gestionar Sistema</h2>
-        <form id="formSistema">
-            <input type="hidden" id="sis_id_editar" value="">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div class="form-group"><label>ID (Ej. 01, 15)</label><input type="text" id="sis_id" required></div>
-                <div class="form-group"><label>Nombre del Sistema</label><input type="text" id="sis_nombre" required></div>
-                <div class="form-group"><label>URL (Enlace)</label><input type="text" id="sis_url" required></div>
-                <div class="form-group"><label>Ícono (FontAwesome)</label><input type="text" id="sis_icono" value="fas fa-link"></div>
-                <div class="form-group">
-                    <label>Tipo de Acceso</label>
-                    <select id="sis_tipo">
-                        <option value="PÚBLICO">PÚBLICO</option>
-                        <option value="PRIVADO">PRIVADO</option>
-                        <option value="RESTRINGIDO">RESTRINGIDO</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Usuario</label><input type="text" id="sis_usuario"></div>
-                <div class="form-group"><label>Contraseña</label><input type="text" id="sis_clave"></div>
-            </div>
-            <div class="form-group"><label>Componentes (Separados por coma)</label><input type="text" id="sis_detalles"></div>
-            <div class="form-group"><label>Nota / Aviso Importante</label><input type="text" id="sis_nota"></div>
-            <div class="form-group"><label>URL Imagen Fondo (Unsplash)</label><input type="text" id="sis_img"></div>
-            <button type="submit"><i class="fas fa-save"></i> Guardar Sistema</button>
-        </form>
-    </div>
-</div>
-
-<div class="overlay" id="modalHerramienta">
-    <div class="modal-box">
-        <button class="close-modal" onclick="window.cerrarModal('modalHerramienta')"><i class="fas fa-times"></i></button>
-        <h2 id="modalHerramientaTitle"><i class="fas fa-toolbox"></i> Gestionar Herramienta</h2>
-        <form id="formHerramienta">
-            <input type="hidden" id="herr_id_editar" value="">
-            <div class="form-group"><label>Nombre Herramienta</label><input type="text" id="herr_nombre" required></div>
-            <div class="form-group"><label>Descripción Corta</label><input type="text" id="herr_desc" required></div>
-            <div class="form-group"><label>URL (Enlace)</label><input type="text" id="herr_url" required></div>
-            <div class="form-group"><label>Ícono (FontAwesome)</label><input type="text" id="herr_icono" value="fas fa-wrench"></div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div class="form-group"><label>Color Fondo (Hex)</label><input type="text" id="herr_color_bg" placeholder="#e0e7ff"></div>
-                <div class="form-group"><label>Color Ícono (Hex)</label><input type="text" id="herr_color_icono" placeholder="#1d4ed8"></div>
-            </div>
-            <button type="submit"><i class="fas fa-save"></i> Guardar Herramienta</button>
-        </form>
-    </div>
-</div>
-
-<div class="overlay" id="modalDirectorio">
-    <div class="modal-box">
-        <button class="close-modal" onclick="window.cerrarModal('modalDirectorio')"><i class="fas fa-times"></i></button>
-        <h2 id="modalDirectorioTitle"><i class="fas fa-address-book"></i> Gestionar Contacto</h2>
-        <form id="formDirectorio">
-            <input type="hidden" id="dir_id_editar" value="">
-            <div class="form-group"><label>Nombre del Área</label><input type="text" id="dir_area" required></div>
-            <div class="form-group"><label>Encargado o Detalle</label><input type="text" id="dir_encargado" required></div>
-            <div class="form-group"><label>Anexo o Teléfono</label><input type="text" id="dir_anexo" required></div>
-            <div class="form-group"><label>Ícono (FontAwesome)</label><input type="text" id="dir_icono" value="fas fa-user"></div>
-            <button type="submit"><i class="fas fa-save"></i> Guardar Contacto</button>
-        </form>
-    </div>
-</div>
-
-<div class="overlay" id="modalAviso">
-    <div class="modal-box">
-        <button class="close-modal" onclick="window.cerrarModal('modalAviso')"><i class="fas fa-times"></i></button>
-        <h2 id="modalAvisoTitle"><i class="fas fa-comment-dots" style="color: #8b5cf6;"></i> Gestionar Aviso</h2>
-        <form id="formAviso">
-            <input type="hidden" id="avi_id_editar" value="">
-            <div class="form-group"><label>Mensaje del Avatar</label><textarea id="avi_mensaje" rows="4" required style="resize: none;"></textarea></div>
-            <button type="submit" style="background: #8b5cf6;"><i class="fas fa-save"></i> Guardar Aviso</button>
-        </form>
-    </div>
-</div>
-
 <div id="toast" class="toast"><i class="fas fa-check-circle"></i> <span>Acción completada</span></div>
-
-<!-- FIREBASE & JS LOGIC -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-    import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCVQAJn-zDlK9zRiZSRW2Vaopyu2uEdh-w",
-      authDomain: "portal-ris-sanmarcos.firebaseapp.com",
-      projectId: "portal-ris-sanmarcos",
-      storageBucket: "portal-ris-sanmarcos.firebasestorage.app",
-      messagingSenderId: "969261654209",
-      appId: "1:969261654209:web:cc158e42454aafc9c5b440"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let isAdmin = false;
-    let localData = { sistemas: [], herramientas: [], directorio: [], avisos: [] };
-    let sortableInstance = null;
-
-    // Default Data
-    const defaults = {
-        sistemas: [
-            { id: "01", nombre: "Repositorio DIRESA CAJAMARCA (CLOUD)", url: "https://cloud.diresacajamarca.gob.pe/", icono: "fas fa-cloud", detalles: "SISMED, SIEN, Seguimiento Anemia, Reportes HIS 26, Ind. Sistema, Control Calidad, Hechos Vitales", acceso_tipo: "PRIVADO", usuario: "ditecajamarca", clave: "Ditecajamarca11", nota: "Acceso Cloud", color_etiqueta: "#e11d48", img_bg: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80", btn_text: "Ingresar al Portal", orden: 1 },
-            { id: "02", nombre: "Manuales HIS - REUNIS", url: "https://bvs.minsa.gob.pe/manuales-del-sistema-de-informacion-his/", icono: "fas fa-book-medical", detalles: "Acceso a REUNIS, Descarga de MANUALES HIS", acceso_tipo: "PÚBLICO", usuario: "", clave: "", nota: "Es de acceso libre.", color_etiqueta: "#16a34a", img_bg: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80", btn_text: "Consultar Manuales", orden: 2 },
-            { id: "03", nombre: "MAPEO INTEGRALIDAD", url: "#", icono: "fas fa-map-marked-alt", detalles: "Herramientas 2026, Cartillas Integralidad, Metas 2026, Población Histórico, Producción 26, Ext. Uso", acceso_tipo: "PÚBLICO", usuario: "", clave: "", nota: "Se recomienda 'solo descargar'.", color_etiqueta: "#16a34a", img_bg: "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80", btn_text: "Ver Mapeo", orden: 3 },
-            { id: "04", nombre: "Seguimiento CURSO DE VIDA", url: "#", icono: "fas fa-heartbeat", detalles: "ONE VISION CLINIC, Seguimiento ONE VISION, Módulo SEGUIMIENTO, Bases Acumuladas, Integralidad por IPRESS", acceso_tipo: "RESTRINGIDO", usuario: "", clave: "", nota: "Gestionar con OITE y RRHH", color_etiqueta: "#ea580c", img_bg: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80", btn_text: "Acceder", orden: 4 },
-            { id: "05", nombre: "EPIDEMIOLOGÍA", url: "https://www.dge.gob.pe/portalnuevo/sala-de-situacion/", icono: "fas fa-chart-line", detalles: "Sala Situacional, Indicadores Epidemiológicos", acceso_tipo: "PÚBLICO", usuario: "", clave: "", nota: "No requiere credenciales.", color_etiqueta: "#16a34a", img_bg: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80", btn_text: "Ver Sala", orden: 5 },
-            { id: "06", nombre: "HECHOS VITALES (RENIEC)", url: "https://portalrcm.reniec.gob.pe/hechosvitales/MenuPrincipal.do", icono: "fas fa-baby", detalles: "Fuente RENIEC, Hechos Vitales RENIEC, SINADEF, CNV", acceso_tipo: "PRIVADO", usuario: "", clave: "", nota: "Requiere gestionar usuario a través de DIRESA", color_etiqueta: "#e11d48", img_bg: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=800&q=80", btn_text: "Ingresar al Portal", orden: 6 },
-            { id: "07", nombre: "COMUNIDADES PERÚ - SAN MARCOS", url: "http://sige.inei.gob.pe/test/atlas/", icono: "fas fa-globe-americas", detalles: "Centros Poblados, INEI, Mapeo Digital", acceso_tipo: "PÚBLICO", usuario: "", clave: "", nota: "Acceder direccionando comunidad.", color_etiqueta: "#16a34a", img_bg: "https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&w=800&q=80", btn_text: "Ingresar al Atlas", orden: 7 },
-            { id: "08", nombre: "ACREDITA SALUD (SUSALUD)", url: "https://app8.susalud.gob.pe:8380/login", icono: "fas fa-shield-alt", detalles: "Sistema SUSALUD, Verificación del Asegurado", acceso_tipo: "RESTRINGIDO", usuario: "", clave: "", nota: "Clave gestionada por RED SALUD", color_etiqueta: "#ea580c", img_bg: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80", btn_text: "Verificar", orden: 8 },
-            { id: "09", nombre: "GUÍA RENIPRESS SALUD", url: "http://app20.susalud.gob.pe:8080/registro-renipress-webapp/listadoEstablecimientosRegistrados.htm", icono: "fas fa-hospital", detalles: "IPRESS del Perú, Guía IPRESS", acceso_tipo: "PÚBLICO", usuario: "", clave: "", nota: "Acceso libre", color_etiqueta: "#16a34a", img_bg: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80", btn_text: "Buscar IPRESS", orden: 9 },
-            { id: "10", nombre: "ESCALE - II EE DEL PERÚ", url: "https://escale.minedu.gob.pe/web/inicio/padron-de-iiee", icono: "fas fa-school", detalles: "Guía de información, Padrón II EE", acceso_tipo: "PÚBLICO", usuario: "", clave: "", nota: "Acceso libre", color_etiqueta: "#16a34a", img_bg: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80", btn_text: "Consultar Escale", orden: 10 },
-            { id: "11", nombre: "INFORMACIÓN UNIDAD SEGUROS", url: "https://drive.google.com/drive/folders/1PSMuv9i_v9KtyJnpxz0B47YDjoBXl-0K", icono: "fab fa-google-drive", detalles: "FUIA MODEL, Modelos FUA 2026", acceso_tipo: "PÚBLICO", usuario: "", clave: "", nota: "Acceso a Drive libre", color_etiqueta: "#16a34a", img_bg: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80", btn_text: "Descargar FUA", orden: 11 },
-            { id: "12", nombre: "TABLERO DE MANDO INTEGRAL", url: "https://sir.diresacajamarca.gob.pe/risc/#/resumen", icono: "fas fa-tachometer-alt", detalles: "Act. marzo 2026, INTEGRALIDAD, V2.0 2026", acceso_tipo: "PÚBLICO", usuario: "", clave: "", nota: "Consulta libre", color_etiqueta: "#16a34a", img_bg: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80", btn_text: "Ver Tablero", orden: 12 },
-            { id: "13", nombre: "REUNIS - MORBILIDAD GENERAL", url: "#", icono: "fas fa-notes-medical", detalles: "DATA MORBILIDAD", acceso_tipo: "PÚBLICO", usuario: "", clave: "", nota: "Información General", color_etiqueta: "#16a34a", img_bg: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80", btn_text: "Ver Data", orden: 13 },
-            { id: "14", nombre: "INFORMACIÓN DEMOGRÁFICA - REUNIS", url: "#", icono: "fas fa-users", detalles: "INFO DEMOGRÁFICA", acceso_tipo: "PÚBLICO", usuario: "", clave: "", nota: "Información General", color_etiqueta: "#16a34a", img_bg: "https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?auto=format&fit=crop&w=800&q=80", btn_text: "Ver Data", orden: 14 }
-        ],
-        herramientas: [
-            { id: "h1", nombre: "Consulta Rápida DNI", desc: "Validación ágil de datos de identidad en línea.", url: "http://dnirapido.space/", icono: "fas fa-id-card", color_bg: "#e0e7ff", color_icono: "#1d4ed8" },
-            { id: "h2", nombre: "Auditoría de Archivos", desc: "Plataforma para validar documentos Excel y PDF.", url: "https://webexcelente.com/", icono: "fas fa-file-shield", color_bg: "#dcfce7", color_icono: "#15803d" },
-            { id: "h3", nombre: "Soporte Remoto (AnyDesk)", desc: "Descarga AnyDesk para asistencia técnica.", url: "https://anydesk.com/es", icono: "fas fa-laptop-medical", color_bg: "#ffe4e6", color_icono: "#e11d48" }
-        ],
-        directorio: [
-            { id: "d1", area: "Soporte HIS MINSA", encargado: "Área de Estadística", anexo: "Anexo: 101", icono: "fas fa-notes-medical" },
-            { id: "d2", area: "Redes y Conectividad", encargado: "OITE San Marcos", anexo: "Anexo: 105", icono: "fas fa-wifi" },
-            { id: "d3", area: "Recursos Humanos", encargado: "Gestión de Personal", anexo: "Anexo: 102", icono: "fas fa-users" }
-        ],
-        avisos: [
-            { id: "a1", mensaje: "Las credenciales de los sistemas están a un clic de distancia. ¡Cópialas y úsalas rápidamente!" },
-            { id: "a2", mensaje: "Si presentas inconvenientes de red en tu área, comunícate al anexo 105 de OITE." },
-            { id: "a3", mensaje: "Usa el validador de DNI rápido en la sección de Herramientas IT para agilizar tus registros." }
-        ]
-    };
-
-    async function loadData() {
-        try {
-            // Cargar o Inicializar Colecciones
-            for (let collectionName of ['sistemas', 'herramientas', 'directorio', 'avisos']) {
-                const querySnapshot = await getDocs(collection(db, collectionName));
-                localData[collectionName] = [];
-                
-                if (querySnapshot.empty) {
-                    console.log(`Inicializando ${collectionName}...`);
-                    for (let item of defaults[collectionName]) {
-                        await setDoc(doc(db, collectionName, item.id), item);
-                        localData[collectionName].push(item);
-                    }
-                } else {
-                    querySnapshot.forEach((doc) => {
-                        localData[collectionName].push({ id: doc.id, ...doc.data() });
-                    });
-                }
-            }
-
-            // Ordenar sistemas
-            localData.sistemas.sort((a, b) => a.orden - b.orden);
-            renderAll();
-        } catch (e) {
-            console.error("Error loading data from Firebase:", e);
-        }
-    }
-
-    // AUTH STATE
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            isAdmin = true;
-            document.getElementById('btnLogInOut').innerHTML = '<i class="fas fa-sign-out-alt"></i> Cerrar Edición';
-            document.getElementById('btnLogInOut').classList.remove('btn-admin');
-            document.getElementById('btnLogInOut').classList.add('bg-red');
-            document.getElementById('btnLogInOut').onclick = logoutAdmin;
-            
-            document.querySelectorAll('.btn-add').forEach(btn => btn.classList.add('visible'));
-            document.getElementById('adminAvisosSection').style.display = 'block';
-            
-            if (sortableInstance) sortableInstance.options.disabled = false;
-        } else {
-            isAdmin = false;
-            document.getElementById('btnLogInOut').innerHTML = '<i class="fas fa-user-shield"></i> Área Admin';
-            document.getElementById('btnLogInOut').classList.add('btn-admin');
-            document.getElementById('btnLogInOut').classList.remove('bg-red');
-            document.getElementById('btnLogInOut').onclick = () => window.abrirModal('loginModal');
-
-            document.querySelectorAll('.btn-add').forEach(btn => btn.classList.remove('visible'));
-            document.getElementById('adminAvisosSection').style.display = 'none';
-
-            if (sortableInstance) sortableInstance.options.disabled = true;
-        }
-        renderAll();
-    });
-
-    // RENDER FUNCTIONS
-    function renderAll() {
-        renderSistemas();
-        renderHerramientas();
-        renderDirectorio();
-        renderAvisos();
-        initSortable();
-    }
-
-    function renderSistemas() {
-        const grid = document.getElementById('gridSistemas');
-        grid.innerHTML = '';
-        localData.sistemas.forEach(sis => {
-            let tagsHtml = sis.detalles.split(',').filter(t=>t.trim()!="").map(t => `<div class="tag-item"><i class="fas fa-check"></i> ${t.trim()}</div>`).join('');
-            
-            let html = `
-            <div class="card item-card item-filtrable" data-id="${sis.id}">
-                <div class="card-header" style="background-image: url('${sis.img_bg}');">
-                    ${isAdmin ? `<div class="drag-handle" title="Arrastra para reordenar"><i class="fas fa-grip-lines"></i> Mover</div>` : ''}
-                    <div class="card-badge-top" style="background: ${sis.color_etiqueta};">${sis.acceso_tipo}</div>
-                    <h3 class="card-title">
-                        <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; font-size: 16px; margin-right: 5px;">${sis.id}</span>
-                        <i class="${sis.icono}"></i> ${sis.nombre}
-                    </h3>
-                    ${isAdmin ? `
-                    <div class="admin-controls" style="display:flex;">
-                        <button class="btn-edit" onclick='window.abrirModalEditarSistema(${JSON.stringify(sis)})'><i class="fas fa-pen"></i></button>
-                        <button class="btn-del" onclick="window.eliminarDoc('sistemas', '${sis.id}')"><i class="fas fa-trash"></i></button>
-                    </div>` : ''}
-                </div>
-                <div class="card-body">
-                    <div class="card-left">
-                        <a href="${sis.url}" class="btn-action ${sis.url === '#' ? 'disabled' : ''}" target="_blank">
-                            ${sis.btn_text || 'Ingresar'} <i class="fas fa-arrow-right"></i>
-                        </a>
-                        ${sis.nota ? `
-                        <div class="card-alert">
-                            <i class="fas fa-exclamation-circle"></i>
-                            <div><strong>Nota / Aviso</strong>${sis.nota}</div>
-                        </div>` : ''}
-                        ${sis.usuario ? `
-                        <div class="public-creds">
-                            <div class="public-creds-title">Credenciales de Acceso</div>
-                            <div class="cred-item" onclick="window.copiarTxt('${sis.usuario}')" title="Clic para copiar usuario">
-                                <span><i class="fas fa-user"></i> <span id="usr_${sis.id}">${sis.usuario}</span></span><i class="fas fa-copy copy-icon"></i>
-                            </div>
-                            <div class="cred-item" onclick="window.copiarTxt('${sis.clave}')" title="Clic para copiar clave">
-                                <span><i class="fas fa-key"></i> <span id="pwd_${sis.id}">${sis.clave}</span></span><i class="fas fa-copy copy-icon"></i>
-                            </div>
-                        </div>` : ''}
-                    </div>
-                    <div class="card-right">
-                        <div class="components-title">Componentes y Anexos:</div>
-                        <div class="tags-container">${tagsHtml}</div>
-                    </div>
-                </div>
-            </div>`;
-            grid.innerHTML += html;
-        });
-    }
-
-    function renderHerramientas() {
-        const grid = document.getElementById('gridHerramientas');
-        grid.innerHTML = '';
-        localData.herramientas.forEach(tool => {
-            grid.innerHTML += `
-            <div class="tool-wrapper item-filtrable">
-                <a href="${tool.url}" target="_blank" class="tool-card">
-                    <div class="tool-icon-box" style="background: ${tool.color_bg}; color: ${tool.color_icono};"><i class="${tool.icono}"></i></div>
-                    <div class="tool-info"><h4>${tool.nombre}</h4><p>${tool.desc}</p></div>
-                    <div class="tool-arrow"><i class="fas fa-arrow-right"></i></div>
-                </a>
-                ${isAdmin ? `
-                <div class="admin-controls-sm">
-                    <button class="btn-sm edit" onclick='window.abrirModalEditarHerramienta(${JSON.stringify(tool)})'><i class="fas fa-pen"></i></button>
-                    <button class="btn-sm del" onclick="window.eliminarDoc('herramientas', '${tool.id}')"><i class="fas fa-trash"></i></button>
-                </div>` : ''}
-            </div>`;
-        });
-    }
-
-    function renderDirectorio() {
-        const grid = document.getElementById('gridDirectorio');
-        grid.innerHTML = '';
-        localData.directorio.forEach(dir => {
-            grid.innerHTML += `
-            <div class="dir-wrapper item-filtrable">
-                <div class="dir-card">
-                    <div class="dir-icon"><i class="${dir.icono}"></i></div>
-                    <div class="dir-info">
-                        <div class="dir-info-header"><h4>${dir.area}</h4><div class="dir-anexo">${dir.anexo}</div></div>
-                        <p>${dir.encargado}</p>
-                    </div>
-                </div>
-                ${isAdmin ? `
-                <div class="admin-controls-sm">
-                    <button class="btn-sm edit" onclick='window.abrirModalEditarDirectorio(${JSON.stringify(dir)})'><i class="fas fa-pen"></i></button>
-                    <button class="btn-sm del" onclick="window.eliminarDoc('directorio', '${dir.id}')"><i class="fas fa-trash"></i></button>
-                </div>` : ''}
-            </div>`;
-        });
-    }
-
-    function renderAvisos() {
-        const grid = document.getElementById('gridAvisos');
-        grid.innerHTML = '';
-        localData.avisos.forEach(avi => {
-            grid.innerHTML += `
-            <div class="aviso-wrapper">
-                <div class="aviso-card"><i class="fas fa-quote-left"></i><p style="margin:0; font-weight: 500; font-style: italic; line-height: 1.4;">"${avi.mensaje}"</p></div>
-                ${isAdmin ? `
-                <div class="admin-controls-sm">
-                    <button class="btn-sm edit" onclick='window.abrirModalEditarAviso(${JSON.stringify(avi)})'><i class="fas fa-pen"></i></button>
-                    <button class="btn-sm del" onclick="window.eliminarDoc('avisos', '${avi.id}')"><i class="fas fa-trash"></i></button>
-                </div>` : ''}
-            </div>`;
-        });
-    }
-
-    function initSortable() {
-        const grid = document.getElementById('gridSistemas');
-        if(sortableInstance) sortableInstance.destroy();
-        sortableInstance = new Sortable(grid, {
-            animation: 200, handle: '.drag-handle', ghostClass: 'sortable-ghost', dragClass: 'sortable-drag',
-            disabled: !isAdmin,
-            onEnd: async function (evt) {
-                let batch = writeBatch(db);
-                let newOrder = 1;
-                document.querySelectorAll('#gridSistemas .item-card').forEach(card => { 
-                    if(card.dataset.id) {
-                        batch.update(doc(db, "sistemas", card.dataset.id), { orden: newOrder });
-                        // Update localData as well
-                        let sys = localData.sistemas.find(s => s.id === card.dataset.id);
-                        if(sys) sys.orden = newOrder;
-                        newOrder++;
-                    }
-                });
-                await batch.commit();
-                localData.sistemas.sort((a,b)=>a.orden - b.orden);
-                window.mostrarToast("¡Nuevo orden guardado!");
-            }
-        });
-    }
-
-    // CRUD ACTIONS
-    window.guardarDoc = async function(collectionName, dataForm, formId) {
-        try {
-            let id = dataForm.id;
-            if(!id) {
-                if(collectionName === 'sistemas') id = String(localData.sistemas.length + 1).padStart(2, '0');
-                else id = doc(collection(db, collectionName)).id;
-            }
-            if(collectionName === 'sistemas') {
-                dataForm.color_etiqueta = (dataForm.acceso_tipo == 'PRIVADO') ? "#e11d48" : ((dataForm.acceso_tipo == 'RESTRINGIDO') ? "#ea580c" : "#16a34a");
-                dataForm.btn_text = "Ingresar";
-                if(!dataForm.orden) dataForm.orden = localData.sistemas.length + 1;
-            }
-
-            await setDoc(doc(db, collectionName, id), { id: id, ...dataForm }, {merge:true});
-            window.mostrarToast("¡Guardado exitosamente!");
-            window.cerrarModal(formId);
-            await loadData();
-        } catch (e) {
-            console.error("Error al guardar:", e);
-        }
-    }
-
-    window.eliminarDoc = async function(collectionName, id) {
-        if(confirm("¿Seguro que deseas eliminar este elemento?")) {
-            await deleteDoc(doc(db, collectionName, id));
-            window.mostrarToast("Elemento eliminado.");
-            await loadData();
-        }
-    }
-
-    // LOGIN LOGIC
-    document.getElementById('formLogin').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('loginEmail').value;
-        const pass = document.getElementById('loginPass').value;
-        try {
-            await signInWithEmailAndPassword(auth, email, pass);
-            window.cerrarModal('loginModal');
-            document.getElementById('loginErrorMsg').style.display = 'none';
-            window.mostrarToast("¡Bienvenido Admin!");
-        } catch (error) {
-            document.getElementById('loginErrorMsg').style.display = 'flex';
-        }
-    });
-
-    async function logoutAdmin() {
-        await signOut(auth);
-        window.mostrarToast("Sesión cerrada.");
-    }
-    window.logoutAdmin = logoutAdmin;
-
-    // FORM SUBMITS
-    document.getElementById('formSistema').addEventListener('submit', (e) => {
-        e.preventDefault();
-        let data = {
-            id: document.getElementById('sis_id').value, nombre: document.getElementById('sis_nombre').value,
-            url: document.getElementById('sis_url').value, icono: document.getElementById('sis_icono').value,
-            acceso_tipo: document.getElementById('sis_tipo').value, usuario: document.getElementById('sis_usuario').value,
-            clave: document.getElementById('sis_clave').value, detalles: document.getElementById('sis_detalles').value,
-            nota: document.getElementById('sis_nota').value, img_bg: document.getElementById('sis_img').value || "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
-        };
-        window.guardarDoc('sistemas', data, 'modalSistema');
-    });
-
-    document.getElementById('formHerramienta').addEventListener('submit', (e) => {
-        e.preventDefault();
-        let data = {
-            id: document.getElementById('herr_id_editar').value, nombre: document.getElementById('herr_nombre').value,
-            desc: document.getElementById('herr_desc').value, url: document.getElementById('herr_url').value,
-            icono: document.getElementById('herr_icono').value, color_bg: document.getElementById('herr_color_bg').value || "#e0e7ff",
-            color_icono: document.getElementById('herr_color_icono').value || "#1d4ed8"
-        };
-        window.guardarDoc('herramientas', data, 'modalHerramienta');
-    });
-
-    document.getElementById('formDirectorio').addEventListener('submit', (e) => {
-        e.preventDefault();
-        let data = {
-            id: document.getElementById('dir_id_editar').value, area: document.getElementById('dir_area').value,
-            encargado: document.getElementById('dir_encargado').value, anexo: document.getElementById('dir_anexo').value,
-            icono: document.getElementById('dir_icono').value
-        };
-        window.guardarDoc('directorio', data, 'modalDirectorio');
-    });
-
-    document.getElementById('formAviso').addEventListener('submit', (e) => {
-        e.preventDefault();
-        let data = {
-            id: document.getElementById('avi_id_editar').value, mensaje: document.getElementById('avi_mensaje').value
-        };
-        window.guardarDoc('avisos', data, 'modalAviso');
-    });
-
-    // INIT
-    loadData();
-
-</script>
 
 <script>
     // Reloj dinámico
@@ -777,83 +665,15 @@
 
     window.copiarTxt = function(texto) {
         navigator.clipboard.writeText(texto).then(() => {
-            window.mostrarToast("¡Copiado!");
+            let toast = document.getElementById('toast');
+            toast.querySelector('span').innerText = "¡Copiado!";
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
             confetti({ particleCount: 50, spread: 50, origin: { y: 0.8 }, zIndex: 10000, colors: ['#2563eb', '#ffffff'] });
         });
     }
 
     window.lanzarConfetiLogo = function() { confetti({ particleCount: 100, spread: 80, origin: { y: 0.3 } }); }
-
-    window.mostrarToast = function(msg) {
-        let toast = document.getElementById('toast');
-        toast.querySelector('span').innerText = msg;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
-    }
-
-    window.abrirModal = function(id) { document.getElementById(id).classList.add('active'); }
-    window.cerrarModal = function(id) { document.getElementById(id).classList.remove('active'); }
-
-    // MODALES ADMIN
-    window.abrirModalSistema = function() {
-        document.getElementById('sis_id').value = '';
-        document.getElementById('modalSistemaTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Nuevo Sistema';
-        document.querySelector('#modalSistema form').reset();
-        window.abrirModal('modalSistema');
-    }
-    window.abrirModalEditarSistema = function(datos) {
-        document.getElementById('sis_id_editar').value = datos.id;
-        document.getElementById('sis_id').value = datos.id;
-        document.getElementById('modalSistemaTitle').innerHTML = '<i class="fas fa-edit"></i> Editar Sistema';
-        document.getElementById('sis_nombre').value = datos.nombre; document.getElementById('sis_url').value = datos.url;
-        document.getElementById('sis_icono').value = datos.icono; document.getElementById('sis_tipo').value = datos.acceso_tipo;
-        document.getElementById('sis_usuario').value = datos.usuario || ''; document.getElementById('sis_clave').value = datos.clave || '';
-        document.getElementById('sis_detalles').value = datos.detalles; document.getElementById('sis_nota').value = datos.nota || '';
-        document.getElementById('sis_img').value = datos.img_bg;
-        window.abrirModal('modalSistema');
-    }
-
-    window.abrirModalHerramienta = function() {
-        document.getElementById('herr_id_editar').value = '';
-        document.getElementById('modalHerramientaTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Nueva Herramienta';
-        document.querySelector('#modalHerramienta form').reset();
-        window.abrirModal('modalHerramienta');
-    }
-    window.abrirModalEditarHerramienta = function(datos) {
-        document.getElementById('herr_id_editar').value = datos.id;
-        document.getElementById('modalHerramientaTitle').innerHTML = '<i class="fas fa-edit"></i> Editar Herramienta';
-        document.getElementById('herr_nombre').value = datos.nombre; document.getElementById('herr_desc').value = datos.desc;
-        document.getElementById('herr_url').value = datos.url; document.getElementById('herr_icono').value = datos.icono;
-        document.getElementById('herr_color_bg').value = datos.color_bg; document.getElementById('herr_color_icono').value = datos.color_icono;
-        window.abrirModal('modalHerramienta');
-    }
-
-    window.abrirModalDirectorio = function() {
-        document.getElementById('dir_id_editar').value = '';
-        document.getElementById('modalDirectorioTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Nuevo Contacto';
-        document.querySelector('#modalDirectorio form').reset();
-        window.abrirModal('modalDirectorio');
-    }
-    window.abrirModalEditarDirectorio = function(datos) {
-        document.getElementById('dir_id_editar').value = datos.id;
-        document.getElementById('modalDirectorioTitle').innerHTML = '<i class="fas fa-edit"></i> Editar Contacto';
-        document.getElementById('dir_area').value = datos.area; document.getElementById('dir_encargado').value = datos.encargado;
-        document.getElementById('dir_anexo').value = datos.anexo; document.getElementById('dir_icono').value = datos.icono;
-        window.abrirModal('modalDirectorio');
-    }
-
-    window.abrirModalAviso = function() {
-        document.getElementById('avi_id_editar').value = '';
-        document.getElementById('modalAvisoTitle').innerHTML = '<i class="fas fa-plus-circle" style="color: #8b5cf6;"></i> Nuevo Aviso';
-        document.querySelector('#modalAviso form').reset();
-        window.abrirModal('modalAviso');
-    }
-    window.abrirModalEditarAviso = function(datos) {
-        document.getElementById('avi_id_editar').value = datos.id;
-        document.getElementById('modalAvisoTitle').innerHTML = '<i class="fas fa-edit" style="color: #8b5cf6;"></i> Editar Aviso';
-        document.getElementById('avi_mensaje').value = datos.mensaje;
-        window.abrirModal('modalAviso');
-    }
 
     // LÓGICA DEL AVATAR DRAG & DROP Y FLIP 
     const avatarContainer = document.getElementById('draggableAvatar');
@@ -894,26 +714,26 @@
         }
     }
 
+    let mensajesAvatar = [
+        "Las credenciales de los sistemas están a un clic de distancia. ¡Cópialas y úsalas rápidamente!",
+        "Si presentas inconvenientes de red en tu área, comunícate al anexo 105 de OITE.",
+        "Usa el validador de DNI rápido en la sección de Herramientas IT para agilizar tus registros.",
+        "Recuerda no compartir las credenciales públicas con personas externas a la institución."
+    ];
     let msgIdx = 0;
-    avatarImg.addEventListener('click', function(e){ window.saludarAvatar(); });
+    
+    avatarImg.addEventListener('click', function(e){ saludarAvatar(); });
 
     function burbujaMsg(show) {
         if(show) mainMsg.classList.add('show'); else mainMsg.classList.remove('show');
     }
 
-    setInterval(() => { window.saludarAvatar(); }, 45000); 
+    setInterval(() => { saludarAvatar(); }, 45000); 
 
-    window.saludarAvatar = function() {
-        // En HTML estático, la data de Firebase se lee desde el DOM renderizado (avisos)
-        let messages = ["¡Hola! Bienvenido al portal."];
-        let msgElements = document.querySelectorAll('.aviso-card p');
-        if(msgElements.length > 0) {
-            messages = Array.from(msgElements).map(el => el.innerText.replace(/"/g, ''));
-        }
-
-        mainMsg.innerHTML = `<i class="fas fa-comment-dots"></i> ${messages[msgIdx]}`;
+    function saludarAvatar() {
+        mainMsg.innerHTML = `<i class="fas fa-comment-dots"></i> ${mensajesAvatar[msgIdx]}`;
         burbujaMsg(true);
-        msgIdx = (msgIdx + 1) % messages.length;
+        msgIdx = (msgIdx + 1) % mensajesAvatar.length;
         
         avatarImg.style.transform = avatarImg.classList.contains('flipped') ? 'scaleX(-1) scale(1.05) translateY(-5px)' : 'scale(1.05) translateY(-5px)';
         setTimeout(() => { avatarImg.style.transform = avatarImg.classList.contains('flipped') ? 'scaleX(-1)' : ''; }, 300);
